@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Cisco IP Phone 7821",
+        "idCategory": 2,
+        "canBeLoaned": false,
+        "imageUrl": "https://media.ldlc.com/r374/ld/products/00/05/14/00/LD0005140072_2.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Cisco IP Phone 8851",
+        "idCategory": 2,
+        "canBeLoaned": false,
+        "imageUrl": "https://media.ldlc.com/r1600/ld/products/00/03/95/95/LD0003959506_2_0003959562_0005140614.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Dell Inspiron 15",
+        "idCategory": 3,
+        "canBeLoaned": true,
+        "imageUrl": "https://media.ldlc.com/r1600/ld/products/00/05/50/87/LD0005508749_2_0005668376_0005708584.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Vidéoprojecteur Acer",
+        "idCategory": 4,
+        "canBeLoaned": true,
+        "imageUrl": "https://media.ldlc.com/r1600/ld/products/00/05/64/32/LD0005643283_2.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Switch NETGEAR 8 ports",
+        "idCategory": 1,
+        "canBeLoaned": false,
+        "imageUrl": "https://media.ldlc.com/r374/ld3/zoom/2010/LD0000827027.jpg"
+    }
+]

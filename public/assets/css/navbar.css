@@ -1,0 +1,74 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+  
+  /*----------------------------*\
+  NavBar
+  \*----------------------------*/
+  #logo {
+    height: 80px;
+  }
+  
+  .navbar-custom {
+    background-color: #343A40;
+  }
+  
+  /* Modify brand and text color */
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link {
+    color: #fff;
+  }
+  
+  /* Modify brand and text color */
+  .navbar-custom .navbar-brand:focus,
+  .navbar-custom .navbar-brand:hover,
+  .navbar-custom .nav-link:focus,
+  .navbar-custom .nav-link:hover {
+    color: #1796A4;
+  }
+  
+  .navigation {
+    display: flex;
+    list-style: none;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .navigation a {
+    text-decoration: none;
+  }
+  
+  
+  @media screen and (min-width: 1010px) {
+    .div-right {
+      margin-left: auto !important;
+      padding-right: 50px;
+    }
+  }
+  
+  
+  @media screen and (max-width: 1068px) {
+  
+    .navigation {
+      font-size: 12px;
+    }
+  
+    .navbar-nav {
+      --bs-nav-link-padding-x: 0p !important;
+    }
+  
+    .navigation li:last-of-type a {
+      border-bottom: none;
+    }
+  
+    .p-2 {
+      padding-bottom: 0.5px !important;
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .top {
+      padding-top: 0px !important;
+    }
+  }

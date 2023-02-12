@@ -1,0 +1,266 @@
+html,
+body {
+  max-height: 100%;
+  max-width: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'open sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1 {
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+
+.buttonAdd {
+  display: inline-block;
+  position: fixed;
+  z-index: 1;
+}
+
+
+/*----------------------------*\
+Modal
+\*----------------------------*/
+
+.btn-secondary,
+.btn-secondary:after {
+  background-color: #1796A4;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btn-secondary:hover {
+  background-color: #1796A4;
+  transition: all 200ms;
+  padding-right: 3em;
+}
+
+.btn-secondary:focus {
+  background-color: #72A1B4;
+  box-shadow: none;
+}
+
+.btn-secondary:focus+.btn.home,
+.btn.home:focus {
+  background-color: #1796A4;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mobile-center {
+  text-align: center;
+}
+
+.div-nav {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+img {
+  width: auto;
+  height: auto;
+}
+
+/*----------------------------*\
+Gallery
+\*----------------------------*/
+
+.col-resize {
+  display: grid;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.div-buttons {
+  border-radius: 0.375rem;
+  margin-bottom: 0.5em;
+  display: flex;
+}
+
+.btn-trash,
+.btn-edit {
+  display: inline-block !important;
+  width: 50%;
+}
+
+.card-img-top {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  max-height: 231px;
+  height: auto;
+  width: auto;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.box-shadow {
+  box-shadow: 0rem .15rem .75rem #1796A4;
+}
+
+.row {
+  padding: 15px 0px;
+  min-width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .col-resize {
+    margin: auto !important;
+    min-width: 80% !important;
+  }
+}
+
+/*Links */
+
+a:hover,
+a:focus {
+  color: #D4D4A5;
+  text-decoration: none;
+  outline: none;
+}
+
+/*----------------------------*\
+Search
+\*----------------------------*/
+.section-search {
+  height: 80px;
+  margin-top: 120px;
+}
+
+.header-search {
+  padding: 15px 0px;
+  min-width: 100%;
+}
+
+.search-center {
+  margin: auto;
+}
+
+@media screen and (max-width: 1080px) {
+  .search-center {
+    margin: auto;
+    min-width: 80%;
+  }
+}
+
+.header-search form {
+  position: relative;
+}
+
+.header-search form .input-select-search {
+  margin-right: -4px;
+  border-radius: 40px 0px 0px 40px;
+}
+
+.header-search form .input-search {
+  width: calc(100% - 300px);
+  margin-right: -4px;
+}
+
+.header-search form .search-btn {
+  height: 40px;
+  width: 100px;
+  background: #E4E7ED;
+  color: #72A1B4;
+  font-weight: 700;
+  border: #1796A4;
+  border-radius: 0px 40px 40px 0px;
+}
+
+/* LIGHT BORDER BUTTON*/
+.btn-check:focus+.btn-primary,
+.btn-primary:focus {
+  box-shadow: 0 0 0 .15rem #1796A4;
+}
+
+.btn-check:active+.btn-primary:focus,
+.btn-check:checked+.btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus {
+  box-shadow: 0 0 0 .15rem #1796A4;
+}
+
+/*-- Input --*/
+.input-search {
+  height: 40px;
+  padding: 0px 15px;
+  border: 1px solid #E4E7ED;
+  background-color: #FFF;
+}
+
+.input-search:checked,
+.form-search:checked {
+  border: 1px solid #1796A4;
+}
+
+.form-search {
+  width: 100%;
+}
+
+input[type=search] {
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type=search]:focus {
+  border: 3px solid #1796A4;
+}
+
+.input-select-search {
+  padding: 0px 15px;
+  background: #E4E7ED;
+  color: #72A1B4;
+  border: 1px solid #1796A4;
+  height: 40px;
+  font-weight: 700;
+}
+
+.form-search:focus {
+  border: 3px solid #1796A4;
+}
+
+.input-select-search,
+.input-select-search:focus {
+  outline: none;
+}
+
+.next-image-button:focus-visible {
+  outline: 3px solid #1796A4;
+}
+
+#btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.errorMsgShow {
+  color: red;
+  margin-left: 10px;
+}

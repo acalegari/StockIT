@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, minimum-scale=0.86, initial-scale=0.86, shrink-to-fit=yes">
+  <meta name="description" content="Gestion Stock IT">
+  <meta name="author" content="Aurore Calegari">
+
+  <title>Stock IT</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/Logo_StockIT-Black.png') }}">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/navbar.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/footer.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"
+    integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f1a259659b.js" crossorigin="anonymous"></script>
+
+{% if block('headerLogged') is defined %}
+    <link href="{{ asset('assets/css/sheet.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/gallery.js') }}" defer></script>
+{% endif %}
+{% if block('headerForm') is defined %}
+    <link href="{{ asset('assets/css/forms.css') }}" rel="stylesheet">
+{% endif %}
+
+  <!-- GOOGLE TAG (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-52CP6KFYT8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-52CP6KFYT8');
+  </script>
+
+</head>
+
+<body>
+    <header class="header-content">
+
+    {% if block('navbarLoggout') is defined %}
+    <nav class="navbar navbar-expand-sm navbar-custom">
+            <div class="container-fluid">
+            </div>
+    </nav>
+    {% endif %}
+
+    {% if block('navbarLogged') is defined %}
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-custom navbar-expand-lg fixed-top">
+      <div class="container-fluid div-nav">
+        <span class="navbar-brand">
+          <img id="logo" src="{{ asset('assets/img/Logo_StockIT-White.png') }}" alt="Logo">
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+          aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <div class="flex-container d-flex">
+            <ul class="navbar-nav my-lg-0 navbar-nav-scroll navigation">
+
+              <li class="p-2 0">
+                <a class="nav-link" href="#" id="Accueil"><i class="fa fa-home" aria-hidden="true" title="Accueil"></i>
+                  Accueil</a>
+              </li>
+              <li class="p-2 Réseau">
+                <a class="nav-link" href="javascript: void(0)" id="reseau"><i class="fa fa-microchip"
+                    aria-hidden="true"></i>
+                  Réseau</a>
+              </li>
+              <li class="p-2 Téléphonique">
+                <a class="nav-link" href="javascript: void(0)" id="telephonique"><i class="fa fa-phone-square"
+                    aria-hidden="true"></i>
+                  Téléphonique</a>
+              </li>
+              <li class="p-2 Desktop">
+                <a class="nav-link" href="javascript: void(0)" id="desktop"><i class="fa fa-desktop"
+                    aria-hidden="true"></i>
+                  Desktop</a>
+              </li>
+              <li class="p-2 Réunion">
+                <a class="nav-link" href="javascript: void(0)" id="reunion"><i class="fa fa-video-camera"
+                    aria-hidden="true"></i>
+                  Réunion</a>
+              </li>
+            </ul>
+          </div>
+          <div class="flex-container d-flex div-right">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll navigation">
+              <li class="item-six ml-auto p-2 top">
+                <a class="nav-link" href="javascript: void(0)"><i class="fa fa-user" aria-hidden="true"></i>
+                  Profil</a>
+              </li>
+              <li class="item-seven ml-auto p-2">
+                <a class="nav-link" href="{{ path('app_login') }}"><i class="fa fa-power-off" aria-hidden="true"></i>
+                  Déconnexion</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- /NAVBAR -->
+    {% endif %}
+  </header>
+
+  <main class="main-container">
+  {% if block('searchbar') is defined %}
+    <!-- SEARCH BAR -->
+    <section class="section-search">
+      <h1 hidden>Section-search</h1>
+      <div class="col-md-6 search-center mobile-center">
+        <div class="header-search">
+          <form class="form-search">
+            <select class="input-select-search">
+              <option value="0">Categories</option>
+              <option value="1">Réunion</option>
+              <option value="2">Téléphonique</option>
+              <option value="3">Desktop</option>
+              <option value="4">Réseau</option>
+            </select>
+            <input type="search" class="input-search" placeholder="Rechercher un équipement" aria-label="Search">
+            <button type="button" class="border search-btn btn-primary">Rechercher</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- /SEARCH BAR -->
+    {% endif %}
+
+    <section>
+    {% block body %}  {% endblock %}
+
+      {% if block('productInformation') is defined %}
+
+        <div class="container">
+      <div class="container-fluid">
+        <div class="wrapper row">
+
+          <div class="preview col-md-6">
+            <div class="album py-5 preview-pic tab-content">
+              <div class="row justify-content-md-center no-gutters">
+                <div class="col-md-6 col-resize-p">
+                  <div class="card mb-6 box-shadow">
+                    <img class="card-img-top" src="/assets/img/gallery/modem.png" alt="modem">
+                    <div class="card-body">
+                      <p class="card-text">Modem</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="details col-md-6 bg-light bg-gradient justify-content">
+            <h3 class="product-title">Modem</h3>
+            <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed neque, corporis,
+              explicabo ipsa placeat obcaecati velit voluptate pariatur illum illo iusto! Culpa nulla deleniti
+              blanditiis vel totam temporibus maxime non.</p>
+            <h4 class="colors disponibility">
+              <span class="color green available" data-toggle="tooltip" title="Not In store">Disponible</span>
+            </h4>
+            <div class="emplacement">Emplacement</div>
+          </div>
+
+        </div>
+      </div>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+{% if block('footer') is defined %}
+<!-- Footer-->
+  <footer class="d-flex flex-wrap text-align-center justify-content-between align-items-center py-3 my-4">
+    <!-- COPYRIGHT -->
+    <div class="footer-container-connected">
+      <p class="item"><strong>Tous droits réservés &copy; Stock IT 2022</strong></p>
+      <p class="item float-right">
+        <a href="#">Retour en haut <i class="fa-solid fa-arrow-up"></i></a>
+      </p>
+    </div>
+    <!-- /COPYRIGHT -->
+  </footer>
+{% endif %}
+
+{% if block('formFooter') is defined %}
+  <footer class="text-center text-lg-start footer-container">
+      <!-- Copyright -->
+      <div class="text-center p-3 ">
+        © 2022 Copyright: STOCK IT
+      </div>
+      <!-- Copyright -->
+  </footer>
+{% endif %}
+  <!-- <script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.10'><\/script>".replace("HOST", location.hostname));
+//]]></script>-->
+
+</body>
+
+</html>

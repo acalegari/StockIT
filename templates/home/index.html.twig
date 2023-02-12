@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+{% block headerLogged %} {% endblock %}
+
+
+{% block navbarLogged %} {% endblock %}
+{% block searchbar %} {% endblock %}
+
+{% block body %}
+
+    <!-- GALLERY TITLE -->
+      <div class="album pt-5 bg-light">
+        <h1> TOUS NOS ÉQUIPEMENTS :</h1>
+      </div>
+    <!-- /GALLERY TITLE -->
+    
+   <!-- ADD PRODUCT MODAL -->
+      <div>
+        <div class="buttonAdd">
+          <button type="button" id="addEquipement" name="modalForm-add" title="addEquipement"
+            class="btn btn-secondary home" data-bs-toggle="modal-add" data-bs-target="#staticBackdrop">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- ADD MODAL -->
+        <div class="modal fade modal-add" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
+          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- ADD MODAL HEADER -->
+              <div class="modal-header" id="staticBackdropLabel">
+                <h4 class="modal-title text-align-center">Ajouter un nouvel équipement</h4>
+                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-add"
+                  aria-label="Close"></button>
+              </div>
+
+              <!-- ADD MODAL BODY -->
+              <div class="modal-body">
+                <form class="modalForm addForm" value="add" action="" name="formModal">
+                <!-- insert modal-body using modal.js Add & Edit use the same form -->
+                  <div class="form-modal" id="modalForm-add"></div>
+                </form>
+              </div>
+
+              <!-- ADD MODAL FOORTER -->
+              <div class="modal-footer">
+                <button type="button" title="close" id="close" class="btn btn-danger close"
+                  data-bs-dismiss="modal-add">Fermer</button>
+                <button type="button" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT MODAL -->
+      <div>
+        <div class="modal fade modal-edit" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
+          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- EDIT MODAL HEADER -->
+              <div class="modal-header" id="staticBackdropLabel">
+                <h5 class=" text-align-center">Modifier l'équipement : </h5>
+                <h5 class="text-align-center" id="equipementNameEdit"></h5>
+                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-edit"
+                  aria-label="Close"></button>
+              </div>
+
+              <!-- EDIT MODAL BODY -->
+              <div class="modal-body">
+                <form class="modalForm editForm" id="modal" value="edit" action="" name="formModal">
+                <!-- insert modal-body using modal.js Add & Edit use the same form -->
+                  <div class="form-modal" id="modalForm-edit">
+                    <span class="hidden" id="empty">
+                      <p>Veuillez remplir correctement tous les champs avant de cliquer sur modifier.</p>
+                    </span>
+                  </div>
+                </form>
+              </div>
+
+              <!-- EDIT MODAL FOOTER -->
+              <div class="modal-footer">
+                <button type="button" title="close" id="close" class="btn btn-danger close"
+                  data-bs-dismiss="modal-edit">Annuler</button>
+                <button type="button" type="submit" title="save" id="modify"
+                  class="btn btn-success modify">Modifier</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRASH MODAL -->
+      <div>
+        <div class="modal fade modal-trash" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
+          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- TRASH MODAL HEADER -->
+              <div class="modal-header" id="staticBackdropLabel">
+                <h5 class="modal-title text-align-center">Équipement supprimé : </h5>
+                <h5 class="modal-title text-align-center" id="equipementNameTrash"></h5>
+                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-trash"
+                  aria-label="Close"></button>
+              </div>
+
+              <!-- TRASH MODAL BODY -->
+              <div class="modal-body">
+                <form id="modal-trash" value="trash" action="" name="formModalTrash">
+                    <!-- insert modal-body using gallery.js -->
+                </form>
+              </div>
+
+              <!-- TRASH MODAL FOOTER -->
+              <div class="modal-footer">
+                <button type="button" title="close" id="close" class="btn btn-danger close"
+                  data-bs-dismiss="modal-trash">Non</button>
+                <button type="button" type="submit" title="save" id="yes" class="btn btn-success yes">Oui</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- GALLERY -->
+      <div class="container">
+        <div class="row justify-content-md-center no-gutters" id="gallery">
+          {% for equipement in equipements %}
+            <div class="col-md-4 col-resize">
+              <div class="div-buttons box-shadow">
+                <button type="button" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-trash" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{{ equipement.image }}" alt="">
+                <div class="card-body">
+                  <p class="card-text">{{ equipement.name }}</p>
+                  <div class="justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see'
+                        onclick="window.location.href = '{{ path('app_equipement') }}';">Voir</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category'
+                        onclick="window.location.href = '';">
+                        {{ equipement.idCategory }}</button>
+                    </div>
+                  </div>
+                  <small class="text-muted"></small>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /GALLERY -->
+
+{% endblock %}
+
+{% block footer %} {% endblock %}

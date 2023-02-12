@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block headerForm %} {% endblock %}
+{% block navbarLoggout %} {% endblock %}
+{% block body %}
+<main class="main-container">
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-10">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                    <img src="{{ asset('assets/img/Logo_StockIT-Black.png') }}" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form class="form-login" method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+                    <h1 class="text-center">SE CONNECTER</h1>
+                        <div class="input-group mb-3 float-sm-start">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user fa-duotone fa-user"></i></span>
+                            </div>
+                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Votre identifiant" class="form-control input_user" autocomplete="email" required autofocus>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                                <input type="password" name="password" id="inputPassword" class="form-control input_user" placeholder="Votre mot de passe" autocomplete="current-password" required>
+                                <input type="hidden" name="_csrf_token"
+                                value="{{ csrf_token('authenticate') }}">
+                        </div>
+                        <div class="form-group mb-2">
+                            <div class="custom-control">
+                                {#
+                                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                    See https://symfony.com/doc/current/security/remember_me.html
+                                #}
+
+                                    <label>
+                                        <input type="checkbox" class="custom-control-input" name="_remember_me"> Se souvenir de moi
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button class="btn btn-login" name="login" type="submit">Connexion</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center links">
+                        Vous n'avez pas de compte ?&nbsp; <a href="{{ path('app_register') }}" class="ml-2">S'inscrire</a>
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                        <a href="/html/missing-password.html">Mot de passe perdu ?</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+
+{% block formFooter %} {% endblock %}
+

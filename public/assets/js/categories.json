@@ -1,0 +1,18 @@
+[
+    {
+    "id": 1,
+    "name": "Matériel réseau"
+    },
+    {
+    "id": 2,
+    "name": "Matériel téléphonique"
+    },
+    {
+    "id": 3,
+    "name": "Matériel desktop"
+    },
+    {
+    "id": 4,
+    "name": "Matériel réunion"
+    }
+]

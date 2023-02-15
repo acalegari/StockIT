@@ -50,8 +50,9 @@
         base.html.twig (contains block for: header / footer / modal)
 
 ## PREREQUISITE
+>Symfony version 5.4.21
+>Wamp server version
 >PHP version 8.1.0
->Install Wamp server version
 >phpMyAdmin Version 5.2
 
 ## INSTALLATION
@@ -79,3 +80,6 @@ Otherwise,
 #### Insert data into database using fixtures
 >php bin/console doctrine:fixtures:load
 
+## Run serve
+>symfony serve
+>

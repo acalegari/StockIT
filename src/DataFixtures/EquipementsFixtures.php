@@ -20,6 +20,7 @@ class EquipementsFixtures extends Fixture implements DependentFixtureInterface
             $equipement->setName($value['name']);
             $equipement->setCanBeLoaned($value['canBeLoaned']);
             $equipement->setImage($value['imageUrl']);
+            //setCatefories id due to foreignKey of categories_id | ManyToOne => Equipements Many -> Categories 1
             $equipement->setCategories($this->getReference($value['idCategory']));
             $manager->persist($equipement);
         }
@@ -27,6 +28,7 @@ class EquipementsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
     
+    //start the fixature using AppFixatures then EquiepementsFixatures due to relation between both tables 
     public function getDependencies()
     {
         return [

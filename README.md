@@ -71,9 +71,9 @@
 #### If no changes of the databaseName, run directly the migration
 >php bin/console doctrine:migrations:migrate
 Otherwise,
-1.generate a new migration file
+1. generate a new migration file
 >php bin/console make:migration
-2.then, run mugration
+2. then, run mugration
 >php bin/console doctrine:migrations:migrate
 
 #### Insert data into database using fixtures

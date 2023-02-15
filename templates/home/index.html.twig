@@ -3,7 +3,6 @@
 {% block title %}Hello HomeController!{% endblock %}
 {% block headerLogged %} {% endblock %}
 
-
 {% block navbarLogged %} {% endblock %}
 {% block searchbar %} {% endblock %}
 
@@ -150,7 +149,7 @@
                         onclick="window.location.href = '{{ path('app_equipement') }}';">Voir</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary" title='category'
                         onclick="window.location.href = '';">
-                        {{ equipement.idCategory }}</button>
+                        {{ equipement.categories_id }}</button>
                     </div>
                   </div>
                   <small class="text-muted"></small>

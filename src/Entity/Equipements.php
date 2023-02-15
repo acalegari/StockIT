@@ -17,13 +17,14 @@ class Equipements
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $idCategory = null;
-
-    #[ORM\Column]
     private ?bool $canBeLoaned = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+    #[ORM\ManyToOne(inversedBy: 'equipements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categories $categories = null;
 
     public function getId(): ?int
     {
@@ -38,18 +39,6 @@ class Equipements
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getIdCategory(): ?int
-    {
-        return $this->idCategory;
-    }
-
-    public function setIdCategory(int $idCategory): self
-    {
-        $this->idCategory = $idCategory;
 
         return $this;
     }
@@ -74,6 +63,18 @@ class Equipements
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategories(): ?Categories
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?Categories $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }

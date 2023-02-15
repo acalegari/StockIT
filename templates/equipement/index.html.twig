@@ -1,20 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EquipementController!{% endblock %}
+{% block title %}Réservation !{% endblock %}
+{% block headerLogged %} {% endblock %}
+
+{% block navbarLogged %} {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+ <main>
+ <!-- EQUIPEMENT TITLE -->
+      <div class="album pt-5 bg-light">
+        <h1>  </h1>
+      </div>
+    <!-- /EQUIPEMENT TITLE -->
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/auror/Documents/GitHub/projet3/StockIt/src/Controller/EquipementController.php'|file_link(0) }}">src/Controller/EquipementController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/auror/Documents/GitHub/projet3/StockIt/templates/equipement/index.html.twig'|file_link(0) }}">templates/equipement/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <!-- PRODUCT -->
+
+    <div class="container">
+      <div class="container-fluid">
+        <div class="wrapper row">
+
+          <div class="preview col-md-6">
+            <div class="album py-5 preview-pic tab-content">
+              <div class="row justify-content-md-center no-gutters">
+                <div class="col-md-6 col-resize-p">
+                  <div class="card mb-6 box-shadow">
+                    <img class="card-img-top" src="/assets/img/gallery/modem.png" alt="modem">
+                    <div class="card-body">
+                      <p class="card-text">Modem</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="details col-md-6 bg-light bg-gradient justify-content">
+            <h3 class="product-title">Modem</h3>
+            <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed neque, corporis,
+              explicabo ipsa placeat obcaecati velit voluptate pariatur illum illo iusto! Culpa nulla deleniti
+              blanditiis vel totam temporibus maxime non.</p>
+            <h4 class="colors disponibility">
+              <span class="color green available" data-toggle="tooltip" title="Not In store">Disponible</span>
+            </h4>
+            <div class="emplacement">Emplacement</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- /PRODUCT -->
+
+  </main>
+
 {% endblock %}
+{% block footer %} {% endblock %}

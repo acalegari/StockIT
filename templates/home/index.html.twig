@@ -130,12 +130,12 @@
       <div class="container">
         <div class="row justify-content-md-center no-gutters" id="gallery">
           {% for equipement in equipements %}
-            <div class="col-md-4 col-resize">
+            <div class="col-md-4 col-resize {{ equipement.categories.name }}">
               <div class="div-buttons box-shadow">
                 <button type="button" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-outline-danger btn-trash" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
+                <button class="btn btn-outline-danger btn-trash" id="{{ equipement.id }} title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
               </div>
@@ -146,7 +146,7 @@
                   <div class="justify-content-between align-items-center">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary" title='see'
-                        onclick="window.location.href = '{{ path('app_equipement') }}';">Voir</button>
+                        onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';">Voir</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary" title='category'
                         onclick="window.location.href = '';">
                         {{ equipement.categories.name }}</button>

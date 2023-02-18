@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Réservation !{% endblock %}
+{% block title %} Réservation !{% endblock %}
 {% block headerLogged %} {% endblock %}
 
 {% block navbarLogged %} {% endblock %}
@@ -19,15 +19,15 @@
     <div class="container">
       <div class="container-fluid">
         <div class="wrapper row">
-
+        
           <div class="preview col-md-6">
             <div class="album py-5 preview-pic tab-content">
               <div class="row justify-content-md-center no-gutters">
                 <div class="col-md-6 col-resize-p">
                   <div class="card mb-6 box-shadow">
-                    <img class="card-img-top" src="/assets/img/gallery/modem.png" alt="modem">
+                    <img class="card-img-top" src=" {{ equipement.image }}" alt="modem">
                     <div class="card-body">
-                      <p class="card-text">Modem</p>
+                      <p class="card-text">{{ equipement.name }}</p>
                     </div>
                   </div>
                 </div>
@@ -36,12 +36,12 @@
           </div>
 
           <div class="details col-md-6 bg-light bg-gradient justify-content">
-            <h3 class="product-title">Modem</h3>
+            <h3 class="product-title">{{ equipement.name }}</h3>
             <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed neque, corporis,
               explicabo ipsa placeat obcaecati velit voluptate pariatur illum illo iusto! Culpa nulla deleniti
               blanditiis vel totam temporibus maxime non.</p>
             <h4 class="colors disponibility">
-              <span class="color green available" data-toggle="tooltip" title="Not In store">Disponible</span>
+              <span class="color green available" data-toggle="tooltip" title="Not In store">{{ equipement.isCanBeLoaned }}</span>
             </h4>
             <div class="emplacement">Emplacement</div>
           </div>

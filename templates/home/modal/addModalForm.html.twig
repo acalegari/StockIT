@@ -1,0 +1,56 @@
+{% block body %}
+
+        <div class="modalFormAdd" id="modalForm-add">
+            <div class="form-group"> 
+                <label for"equipementName"> Ajouter le nom de l'équipement </label>
+                 {{ form_widget(addForm.name, { 'attr' : { 'class': 'form-control input1', 'id': 'equipementName', 'maxLength': 25 } }) }}
+                {# <input class="form-control input1" id="equipementName" type="text" maxLength="25" required /> #} 
+                <span class="hidden" id="equipementName"> Veuillez remplir ce champs </span>
+            </div>
+            <div class="form-group">
+                <label for="selectCategory" id="selectLabelCategory"> Sélectionnez une catégorie </label>
+                
+                {# {{ form_widget(addForm.categorie, { 
+                    'label': 'Sélectionnez une catégorie',
+                    'attr' : { 
+                                'name': 'category',
+                                'class': 'form-control', 
+                                'id': 'selectCategory',
+                            } 
+                    }) }} #}
+                
+                <select name="category" class="form-control" id="selectCategory">
+                    <option value=""> Sélectionnez une catégorie </option>
+                    {% for categorie in categories %}
+                    <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="hidden" id="category"> Veuillez selectionner une catégorie </span>
+            </div>
+            <div class="form-group radioE">Cet équipement est-il disponible ?
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="false" for="inlineRadio1" type="radio" name="inlineRadioOptions" value="false" />
+                    <label class="form-check-label" for="inlineRadio1">Non</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="true" for="inlineRadio2" type="radio" name="inlineRadioOptions" value="true" />
+                    <label class="form-check-label" for="inlineRadio2">Oui</label>
+                    <span class="hidden" id="loaned"> Veuillez indiquer si l'équipement est Disponible </span>
+                </div>
+            </div>
+            <div class="form group url">
+                <label for"addUrlImage"> Ajoutez l'url de l'image </label>
+                {{ form_row(addForm.image, { 
+                    'attr' : { 
+                                'class': 'form-control', 
+                                'id': 'addUrlImage'
+                            } 
+                }) }}
+                
+                {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
+            </div>
+        </div>
+{% endblock %}
+
+{% block footer %} {% endblock %}

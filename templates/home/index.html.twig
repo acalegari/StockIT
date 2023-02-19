@@ -37,17 +37,17 @@
 
               <!-- ADD MODAL BODY -->
               <div class="modal-body">
-                <form class="modalForm addForm" value="add" action="" name="formModal">
-                <!-- insert modal-body using modal.js Add & Edit use the same form -->
+                {{ form_start(addForm, { 'attr' : { 'class': 'modalForm addForm', 'value': 'add', 'action': '', 'name': 'modalForm-add', 'method': 'post' } }) }}
+                   {{ include('home/modal/addModalForm.html.twig') }}
                   <div class="form-modal" id="modalForm-add"></div>
-                </form>
+               {{ form_end(addForm) }}
               </div>
 
               <!-- ADD MODAL FOORTER -->
               <div class="modal-footer">
                 <button type="button" title="close" id="close" class="btn btn-danger close"
                   data-bs-dismiss="modal-add">Fermer</button>
-                <button type="button" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button>
+                <button type="button" type="submit" title="save" id="save" class="btn btn-success send"  onclick="window.location.href = '{{ path('app_home') }}';">Ajouter</button>
               </div>
             </div>
           </div>
@@ -71,8 +71,8 @@
 
               <!-- EDIT MODAL BODY -->
               <div class="modal-body">
-                <form class="modalForm editForm" id="modal" value="edit" action="" name="formModal">
-                <!-- insert modal-body using modal.js Add & Edit use the same form -->
+                <form class="modalForm editForm" id="modal" value="edit" action="" name="formModal" method="post">
+                  {{ include('home/modal/editModalForm.html.twig') }}
                   <div class="form-modal" id="modalForm-edit">
                     <span class="hidden" id="empty">
                       <p>Veuillez remplir correctement tous les champs avant de cliquer sur modifier.</p>

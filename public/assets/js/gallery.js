@@ -1,4 +1,4 @@
-import { addEquipementModal, sendEquipement, isUrlImage, isStrSpaces } from './modal.js';
+import { isUrlImage } from './modal.js';
 
 $(document).ready(function () {
 
@@ -47,12 +47,12 @@ $(document).ready(function () {
 $(document).ready(function () {
     try {
         $('button#addEquipement').click(function (e) {
-            let btnName = e.target.name;
-            addEquipementModal(categoryObj, btnName);
             $('.modal-add').modal('show');
 
             //checks on change inputs
-            $('form.addForm :input').on('change', function (e) {
+            $('.modalFormAdd :input').on('change', function (e) {
+                let selectLoaned = e.target.checked;
+                
                 if (e.target.id == 'equipementName' && !e.target.value == '') {
                     $($(this)).css('border', '');
                     $('span#equipementName').addClass('hidden');
@@ -75,8 +75,6 @@ $(document).ready(function () {
                     $('span#category').removeClass('hidden');
                     $('span#category').addClass('errorMsgShow');
                 }
-
-                let selectLoaned = e.target.checked;
                 if (e.target.name == 'inlineRadioOptions' && selectLoaned != true) {
                     $('span#loaned').addClass('errorMsgShow');
                     $('span#loaned').removeClass('hidden');
@@ -86,18 +84,18 @@ $(document).ready(function () {
                     $('span#loaned').addClass('hidden');
                 }
 
-                if (e.target.id == 'addURLImage') {
+                if (e.target.id == 'addUrlImage') {
                     if (isUrlImage(e.target.value) == false && e.target.value != '') {
                         $($(this)).css('border', '3px solid red');
-                        $('span#url').removeClass('hidden');
-                        $('span#url').addClass('errorMsgShow');
-                        $('span#url').html('Veuillez entrer une url valide. ex: https://xxxxx.jpg');
+                        $('span#urlInput').removeClass('hidden');
+                        $('span#urlInput').addClass('errorMsgShow');
+                        $('span#urlInput').html('Veuillez entrer une url valide. ex: https://xxxxx.jpg');
                     }
                     if (e.target.value == '') {
                         $($(this)).css('border', '3px solid red');
-                        $('span#url').removeClass('hidden');
-                        $('span#url').addClass('errorMsgShow');
-                        $('span#url').html('Veuillez entrer une url');
+                        $('span#urlInput').removeClass('hidden');
+                        $('span#urlInput').addClass('errorMsgShow');
+                        $('span#urlInput').html('Veuillez entrer une url');
                     }
                     if (e.target.value != '' || isUrlImage(e.target.value) == true) {
                         $($(this)).css('border', '');
@@ -108,10 +106,10 @@ $(document).ready(function () {
             });
         });
 
-        //send button
-        $('.send').click(function () {
-            sendEquipement();
-        });
+        // //send button
+        // $('.send').click(function () {
+        //     // sendEquipement();
+        // });
 
         //close button
         $('.close').click(function () {
@@ -128,180 +126,180 @@ $(document).ready(function () {
     }
 });
 
-//edit equipement
-$(document).ready(function () {
-    try {
-        $('.btn-edit').click(function (e) {
-            //modal to use
-            let btnName = e.target.name;
-            //retrieve json information
-            let storageName = e.target.id;
-            //retrieve equipement object
-            let equipement = objEquipement(storageName, categoryObj);
-            let cardEquipement = equipement[0];
-            let equipementId = equipement[1];
-            let equipementName = equipement[2];
-            let categoryId = equipement[3];
-            let loanedValue;
-            let url = equipement[5];
-            addEquipementModal(categoryObj, btnName);
-            let loaned;
-            if (equipement[4] == false) {
-                loaned = 0;
-                loanedValue = 'false';
-            } else if (equipement[4] == true) {
-                loaned = 1;
-                loanedValue = 'true';
-            }
-            //display json information
-            $('h5#equipementNameEdit').html(equipementName);
-            $('input.input1').val(equipementName);
-            $('select option[value="' + categoryId + '"').attr('selected', true);
-            $('input:radio[name=inlineRadioOptions]')[loaned].checked = true;
-            $('input#addURLImage').val(url);
-            //open modal
-            $('.modal-edit').modal('show');
+// //edit equipement
+// $(document).ready(function () {
+//     try {
+//         $('.btn-edit').click(function (e) {
+//             //modal to use
+//             let btnName = e.target.name;
+//             //retrieve json information
+//             let storageName = e.target.id;
+//             //retrieve equipement object
+//             let equipement = objEquipement(storageName, categoryObj);
+//             let cardEquipement = equipement[0];
+//             let equipementId = equipement[1];
+//             let equipementName = equipement[2];
+//             let categoryId = equipement[3];
+//             let loanedValue;
+//             let url = equipement[5];
+//             addEquipementModal(categoryObj, btnName);
+//             let loaned;
+//             if (equipement[4] == false) {
+//                 loaned = 0;
+//                 loanedValue = 'false';
+//             } else if (equipement[4] == true) {
+//                 loaned = 1;
+//                 loanedValue = 'true';
+//             }
+//             //display json information
+//             $('h5#equipementNameEdit').html(equipementName);
+//             $('input.input1').val(equipementName);
+//             $('select option[value="' + categoryId + '"').attr('selected', true);
+//             $('input:radio[name=inlineRadioOptions]')[loaned].checked = true;
+//             $('input#addURLImage').val(url);
+//             //open modal
+//             $('.modal-edit').modal('show');
 
-            //check inputs after changes before submit
-            $('form.editForm :input').on('change', function (e) {
-                if (e.target.id == 'equipementName' && !e.target.value == '') {
-                    $($(this)).css('border', '3px solid green');
-                    $('span#equipementName').addClass('hidden');
-                    $('span#equipementName').removeClass('errorMsgShow');
-                } else if (e.target.id == 'equipementName' && e.target.value == '') {
-                    $($(this)).css('border', '3px solid red');
-                    $('span#equipementName').removeClass('hidden');
-                    $('span#equipementName').addClass('errorMsgShow');
-                }
+//             //check inputs after changes before submit
+//             $('form.editForm :input').on('change', function (e) {
+//                 if (e.target.id == 'equipementName' && !e.target.value == '') {
+//                     $($(this)).css('border', '3px solid green');
+//                     $('span#equipementName').addClass('hidden');
+//                     $('span#equipementName').removeClass('errorMsgShow');
+//                 } else if (e.target.id == 'equipementName' && e.target.value == '') {
+//                     $($(this)).css('border', '3px solid red');
+//                     $('span#equipementName').removeClass('hidden');
+//                     $('span#equipementName').addClass('errorMsgShow');
+//                 }
 
-                if (e.target.id == 'selectCategory' && e.target.value != 0) {
-                    $($(this)).css('border', '3px solid green');
-                    $('span#category').addClass('hidden');
-                    $('span#category').removeClass('errorMsgShow');
-                } else if (e.target.id == 'selectCategory' && e.target.value == 0) {
-                    $($(this)).css('border', '3px solid red');
-                    $('span#category').removeClass('hidden');
-                    $('span#category').addClass('errorMsgShow');
-                }
+//                 if (e.target.id == 'selectCategory' && e.target.value != 0) {
+//                     $($(this)).css('border', '3px solid green');
+//                     $('span#category').addClass('hidden');
+//                     $('span#category').removeClass('errorMsgShow');
+//                 } else if (e.target.id == 'selectCategory' && e.target.value == 0) {
+//                     $($(this)).css('border', '3px solid red');
+//                     $('span#category').removeClass('hidden');
+//                     $('span#category').addClass('errorMsgShow');
+//                 }
 
-                if (e.target.name == 'inlineRadioOptions' && e.target.id == 'false') {
-                    $('input#false').css('background-color', 'green');
-                    $('input#true').css('background-color', '');
-                } else if (e.target.name == 'inlineRadioOptions' && e.target.id == 'true') {
-                    $('input#true').css('background-color', 'green');
-                    $('input#false').css('background-color', '');
-                }
+//                 if (e.target.name == 'inlineRadioOptions' && e.target.id == 'false') {
+//                     $('input#false').css('background-color', 'green');
+//                     $('input#true').css('background-color', '');
+//                 } else if (e.target.name == 'inlineRadioOptions' && e.target.id == 'true') {
+//                     $('input#true').css('background-color', 'green');
+//                     $('input#false').css('background-color', '');
+//                 }
 
-                if (e.target.id == 'addURLImage') {
-                    if (isUrlImage(e.target.value) == false && e.target.value != '') {
-                        $($(this)).css('border', '3px solid red');
-                        $('span#url').removeClass('hidden');
-                        $('span#url').addClass('errorMsgShow');
-                        $('span#url').html('Veuillez entrer une url valide. ex: https://xxxxx.jpg');
-                    } else if (e.target.value == '') {
-                        $($(this)).css('border', '3px solid red');
-                        $('span#url').removeClass('hidden');
-                        $('span#url').addClass('errorMsgShow')
-                        $('span#url').html('Veuillez entrer une url');
-                    } else {
-                        $($(this)).css('background-color', 'green');
-                        $('span#url').addClass('hidden');
-                        $('span#url').removeClass('errorMsgShow')
-                    }
-                }
-            });
+//                 if (e.target.id == 'addURLImage') {
+//                     if (isUrlImage(e.target.value) == false && e.target.value != '') {
+//                         $($(this)).css('border', '3px solid red');
+//                         $('span#url').removeClass('hidden');
+//                         $('span#url').addClass('errorMsgShow');
+//                         $('span#url').html('Veuillez entrer une url valide. ex: https://xxxxx.jpg');
+//                     } else if (e.target.value == '') {
+//                         $($(this)).css('border', '3px solid red');
+//                         $('span#url').removeClass('hidden');
+//                         $('span#url').addClass('errorMsgShow')
+//                         $('span#url').html('Veuillez entrer une url');
+//                     } else {
+//                         $($(this)).css('background-color', 'green');
+//                         $('span#url').addClass('hidden');
+//                         $('span#url').removeClass('errorMsgShow')
+//                     }
+//                 }
+//             });
 
-            //modified button clicked
-            $('.modify').click(function () {
+//             //modified button clicked
+//             $('.modify').click(function () {
 
-                //retrieve input data
-                let newEquipementName = document.getElementById('equipementName').value;
-                let newCategoryValue = $('#selectCategory :selected').val();
-                let selectLoaned = undefined;
-                selectLoaned = $('.form-check-input:checked').val();
-                let newUrl = document.getElementById('addURLImage').value;
+//                 //retrieve input data
+//                 let newEquipementName = document.getElementById('equipementName').value;
+//                 let newCategoryValue = $('#selectCategory :selected').val();
+//                 let selectLoaned = undefined;
+//                 selectLoaned = $('.form-check-input:checked').val();
+//                 let newUrl = document.getElementById('addURLImage').value;
 
-                if (newEquipementName == '' && newUrl == false && (parseInt(newCategoryValue) == 0 || parseInt(newCategoryValue) == '') && newRadioOptions == undefined) {
-                    $('.modal-edit').off();
-                    $('.modify').off();
-                    $('.modal-edit').modal('hide');
-                    $('.modal-edit').on('hidden.bs.modal', function () {
-                        $('#formModal').remove();
-                        $(this).find('form').trigger('reset');
-                    });
-                } else if (newEquipementName == equipementName && newUrl == url && parseInt(newCategoryValue) == categoryId && selectLoaned == loanedValue) {
-                    $('.modal-edit').off();
-                    $('.modify').off();
-                    $('.modal-edit').modal('hide');
-                    $('.modal-edit').on('hidden.bs.modal', function () {
-                        $('#formModal').remove();
-                        $(this).find('form').trigger('reset');
-                    });
-                } else if (!isStrSpaces(newEquipementName)) {
-                    $('input.input1').css('border', '3px solid red');
-                    $('span#equipementName').removeClass('hidden');
-                    $('span#equipementName').addClass('errorMsgShow');
-                } else if (newEquipementName == '') {
-                    $('input.input1').css('border', '3px solid red');
-                    $('span#equipementName').addClass('errorMsgShow');
-                    $('span#equipementName').removeClass('hidden');
-                } else if (newCategoryValue == '' || newCategoryValue == 0) {
-                    $('select#selectCategory').css('border', '3px solid red');
-                    $('span#category').removeClass('hidden');
-                    $('span#category').addClass('errorMsgShow');
-                } else if (selectLoaned == undefined) {
-                    $('span#loaned').addClass('errorMsgShow');
-                    $('span#loaned').removeClass('hidden');
-                } else if (isUrlImage(newUrl) == false) {
-                    $('input#addURLImage').css('border', '3px solid red');
-                    $('span#url').removeClass('hidden');
-                    $('span#url').addClass('errorMsgShow');
-                } else if (newEquipementName != equipementName || parseInt(newCategoryValue) != categoryId || selectLoaned != loanedValue || newUrl != url) {
-                    let boolValue = (selectLoaned === 'true');
-                    //remove old card equipement
-                    localStorage.removeItem(cardEquipement);
-                    //save edited card equipement
-                    const cardObj = { equipementId: equipementId, equipementName: newEquipementName, categoryId: parseInt(newCategoryValue), loaned: boolValue, equipementUrl: newUrl };
-                    const cardJSON = JSON.stringify(cardObj);
-                    localStorage.setItem(cardEquipement, cardJSON);
-                    $('span#empty').addClass('hidden');
-                    $('span#empty').removeClass('errorMsgShow');
-                    $('.modal-edit').off();
-                    $('.modify').off();
-                    $('.modal-edit').modal('hide');
-                    $('.modal-edit').on('hidden.bs.modal', function () {
-                        $('#formModal').remove();
-                        $(this).find('form').trigger('reset');
-                        location.reload();
-                    });
-                } else {
-                    $('span#equipementName').addClass('hidden');
-                    $('span#equipementName').removeClass('errorMsgShow');
-                    $('span#category').addClass('hidden');
-                    $('span#category').removeClass('errorMsgShow');
-                    $('span#radio').removeClass('errorMsgShow');
-                    $('span#radio').addClass('hidden');
-                    $('span#url').addClass('hidden');
-                    $('span#url').removeClass('errorMsgShow');
-                }
-            });
-        });
-        $('.close').click(function () {
-            $('.modal-edit').off();
-            $('.modify').off();
-            $('.modal-edit').modal('hide');
-            $('.modal-edit').on('hidden.bs.modal', function () {
-                $('span#empty').addClass('hidden');
-                $('span#empty').removeClass('errorMsgShow');
-                $('#formModal').remove();
-                $(this).find('form').trigger('reset');
-            });
+//                 if (newEquipementName == '' && newUrl == false && (parseInt(newCategoryValue) == 0 || parseInt(newCategoryValue) == '') && newRadioOptions == undefined) {
+//                     $('.modal-edit').off();
+//                     $('.modify').off();
+//                     $('.modal-edit').modal('hide');
+//                     $('.modal-edit').on('hidden.bs.modal', function () {
+//                         $('#formModal').remove();
+//                         $(this).find('form').trigger('reset');
+//                     });
+//                 } else if (newEquipementName == equipementName && newUrl == url && parseInt(newCategoryValue) == categoryId && selectLoaned == loanedValue) {
+//                     $('.modal-edit').off();
+//                     $('.modify').off();
+//                     $('.modal-edit').modal('hide');
+//                     $('.modal-edit').on('hidden.bs.modal', function () {
+//                         $('#formModal').remove();
+//                         $(this).find('form').trigger('reset');
+//                     });
+//                 } else if (!isStrSpaces(newEquipementName)) {
+//                     $('input.input1').css('border', '3px solid red');
+//                     $('span#equipementName').removeClass('hidden');
+//                     $('span#equipementName').addClass('errorMsgShow');
+//                 } else if (newEquipementName == '') {
+//                     $('input.input1').css('border', '3px solid red');
+//                     $('span#equipementName').addClass('errorMsgShow');
+//                     $('span#equipementName').removeClass('hidden');
+//                 } else if (newCategoryValue == '' || newCategoryValue == 0) {
+//                     $('select#selectCategory').css('border', '3px solid red');
+//                     $('span#category').removeClass('hidden');
+//                     $('span#category').addClass('errorMsgShow');
+//                 } else if (selectLoaned == undefined) {
+//                     $('span#loaned').addClass('errorMsgShow');
+//                     $('span#loaned').removeClass('hidden');
+//                 } else if (isUrlImage(newUrl) == false) {
+//                     $('input#addURLImage').css('border', '3px solid red');
+//                     $('span#url').removeClass('hidden');
+//                     $('span#url').addClass('errorMsgShow');
+//                 } else if (newEquipementName != equipementName || parseInt(newCategoryValue) != categoryId || selectLoaned != loanedValue || newUrl != url) {
+//                     let boolValue = (selectLoaned === 'true');
+//                     //remove old card equipement
+//                     localStorage.removeItem(cardEquipement);
+//                     //save edited card equipement
+//                     const cardObj = { equipementId: equipementId, equipementName: newEquipementName, categoryId: parseInt(newCategoryValue), loaned: boolValue, equipementUrl: newUrl };
+//                     const cardJSON = JSON.stringify(cardObj);
+//                     localStorage.setItem(cardEquipement, cardJSON);
+//                     $('span#empty').addClass('hidden');
+//                     $('span#empty').removeClass('errorMsgShow');
+//                     $('.modal-edit').off();
+//                     $('.modify').off();
+//                     $('.modal-edit').modal('hide');
+//                     $('.modal-edit').on('hidden.bs.modal', function () {
+//                         $('#formModal').remove();
+//                         $(this).find('form').trigger('reset');
+//                         location.reload();
+//                     });
+//                 } else {
+//                     $('span#equipementName').addClass('hidden');
+//                     $('span#equipementName').removeClass('errorMsgShow');
+//                     $('span#category').addClass('hidden');
+//                     $('span#category').removeClass('errorMsgShow');
+//                     $('span#radio').removeClass('errorMsgShow');
+//                     $('span#radio').addClass('hidden');
+//                     $('span#url').addClass('hidden');
+//                     $('span#url').removeClass('errorMsgShow');
+//                 }
+//             });
+//         });
+//         $('.close').click(function () {
+//             $('.modal-edit').off();
+//             $('.modify').off();
+//             $('.modal-edit').modal('hide');
+//             $('.modal-edit').on('hidden.bs.modal', function () {
+//                 $('span#empty').addClass('hidden');
+//                 $('span#empty').removeClass('errorMsgShow');
+//                 $('#formModal').remove();
+//                 $(this).find('form').trigger('reset');
+//             });
 
-        });
-    } catch (err) {
-        console.log('editEquiementModal' + err);
-    }
-});
+//         });
+//     } catch (err) {
+//         console.log('editEquiementModal' + err);
+//     }
+// });
 
 //remove equipement
 $(document).ready(function () {

@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
+{% block headerLogged %} {% endblock %}
+
+{% block navbarLogged %} {% endblock %}
 
 {% block body %}
     <h1>Edit User</h1>
@@ -11,3 +14,4 @@
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
+{% block footer %} {% endblock %}

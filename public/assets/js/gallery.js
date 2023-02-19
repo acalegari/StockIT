@@ -1,7 +1,5 @@
 import { addEquipementModal, sendEquipement, isUrlImage, isStrSpaces } from './modal.js';
 
-
-
 $(document).ready(function () {
 
     //button addEquipement -> Add text when mouse is over + button and remove effect button
@@ -138,6 +136,7 @@ $(document).ready(function () {
             let btnName = e.target.name;
             //retrieve json information
             let storageName = e.target.id;
+            //retrieve equipement object
             let equipement = objEquipement(storageName, categoryObj);
             let cardEquipement = equipement[0];
             let equipementId = equipement[1];

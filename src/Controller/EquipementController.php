@@ -15,7 +15,7 @@ class EquipementController extends AbstractController
     // {
 
     //     return $this->render('equipement/show.html.twig', [
-    //         'controller_name' => 'EquipementController',
+    //          'controller_name' => 'EquipementController',
     //     ]);
     // }
 
@@ -29,7 +29,6 @@ class EquipementController extends AbstractController
                 'Aucun équipement trouvé pour l\id : '.$id
             );
         }
-        return $this->render('equipement/show.html.twig', ['equipement' => $equipement]);
-        
+        return $this->render('equipement/show.html.twig', ['equipement' => $equipement]);     
     }
 }

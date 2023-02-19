@@ -92,10 +92,12 @@
           </div>
           <div class="flex-container d-flex div-right">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll navigation">
+            {% if is_granted('ROLE_ADMIN') %}
               <li class="item-six ml-auto p-2 top">
-                <a class="nav-link" href="javascript: void(0)"><i class="fa fa-user" aria-hidden="true"></i>
-                  Profil</a>
+                <a class="nav-link" href="{{ path('app_user_index') }}"><i class="fa fa-user" aria-hidden="true"></i>
+                  Admin</a>
               </li>
+            {% endif %}
               <li class="item-seven ml-auto p-2">
                 <a class="nav-link" href="{{ path('app_logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i>
                   Déconnexion</a>
@@ -111,6 +113,9 @@
   </header>
 
   <main class="main-container">
+    <div class="album pt-5 bg-light">
+        <h1> </h1>
+    </div>
   {% if block('searchbar') is defined %}
     <!-- SEARCH BAR -->
     <section class="section-search">
@@ -133,47 +138,9 @@
     </section>
     <!-- /SEARCH BAR -->
     {% endif %}
-
-    <section>
-    {% block body %}  {% endblock %}
-
-      {% if block('productInformation') is defined %}
-
-        <div class="container">
-      <div class="container-fluid">
-        <div class="wrapper row">
-
-          <div class="preview col-md-6">
-            <div class="album py-5 preview-pic tab-content">
-              <div class="row justify-content-md-center no-gutters">
-                <div class="col-md-6 col-resize-p">
-                  <div class="card mb-6 box-shadow">
-                    <img class="card-img-top" src="/assets/img/gallery/modem.png" alt="modem">
-                    <div class="card-body">
-                      <p class="card-text">Modem</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="details col-md-6 bg-light bg-gradient justify-content">
-            <h3 class="product-title">Modem</h3>
-            <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed neque, corporis,
-              explicabo ipsa placeat obcaecati velit voluptate pariatur illum illo iusto! Culpa nulla deleniti
-              blanditiis vel totam temporibus maxime non.</p>
-            <h4 class="colors disponibility">
-              <span class="color green available" data-toggle="tooltip" title="Not In store">Disponible</span>
-            </h4>
-            <div class="emplacement">Emplacement</div>
-          </div>
-
-        </div>
-      </div>
-        </div>
-      {% endif %}
-    </section>
+      <section>
+      {% block body %}  {% endblock %}
+      </section>
   </main>
 
 {% if block('footer') is defined %}

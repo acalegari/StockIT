@@ -35,6 +35,8 @@ when@prod:
             result_cache_driver:
                 type: pool
                 pool: doctrine.result_cache_pool
+        #dbal:
+            #schema_filter: ~^(?!rememberme_token)~
 
     framework:
         cache:

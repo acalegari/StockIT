@@ -1,4 +1,48 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_errors(form) }}
+
+    <div class="col-12">
+    {{ form_row(form.entreprise,{
+        "label": "Entreprise : ",
+        "required": false
+        })
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.firstName,{
+        "label": "Prénom : ",
+        "required": true
+        })
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.lastName,{
+        "label": "Nom : ",
+        "required": true
+        })
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.email,{
+        "label": "Email : ",
+        "required": true
+        })
+    }}
+    <div class="col-12">
+    {{ form_row(form.roles, {
+        "label": "Sélectionner un rôle : ",
+        "params": {
+            "multiselect": true
+            }
+        }) 
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.plainPassword, {
+        "label": 'Mot de passe : '
+        }) 
+    }}
+    </div>
+
+    {{ form_row(form.submit, { 'label': 'Enregistrer' }) }}
 {{ form_end(form) }}

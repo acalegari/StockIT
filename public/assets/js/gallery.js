@@ -136,6 +136,7 @@ $(document).ready(function () {
             let btnName = e.target.name;
             //retrieve json information
             let storageName = e.target.id;
+            //retrieve equipement object
             let equipement = objEquipement(storageName, categoryObj);
             let cardEquipement = equipement[0];
             let equipementId = equipement[1];
@@ -307,7 +308,7 @@ $(document).ready(function () {
     $('.btn-trash').click(function (e) {
         //retrieve id of the selected equipement
         let storageName = e.target.id;
-        let equipement = objEquipement(storageName, categoryObj);
+        let equipement = //add obj of database
         $('h5#equipementNameTrash').html(equipement[2]);
         $('.modal-trash').modal('show');
         $('.yes').click(function (e) {
@@ -335,43 +336,3 @@ $(document).ready(function () {
         });
     });
 });
-
-function objEquipement(id, categoryObj) {
-    /* SCHEMA objEquipement */
-    /*
-    Key     |   name       
-    0       |   cardName
-    1       |   equipementId
-    2       |   equipementName
-    3       |   categoryId
-    4       |   loaned
-    5       |   equipementUrl
-    6       |   categoryName
-    */
-
-    try {
-        let equipement = [];
-        let categoryName = '';
-        let cardName = 'cardJSON' + id;
-        let value = localStorage.getItem(cardName);
-        let obj = JSON.parse(value);
-
-        categoryObj.forEach(function (category) {
-            if (category.id == obj.categoryId) {
-                categoryName = category.name;
-                return categoryName;
-            }
-        });
-        equipement.splice(0, 0, cardName);
-        equipement.splice(1, 0, obj.equipementId);
-        equipement.splice(2, 0, obj.equipementName);
-        equipement.splice(3, 0, obj.categoryId);
-        equipement.splice(4, 0, obj.loaned);
-        equipement.splice(5, 0, obj.equipementUrl);
-        equipement.splice(6, 0, obj.categoryName);
-
-        return equipement;
-    } catch (err) {
-        console.log('objEquipement' + err);
-    }
-}

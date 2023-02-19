@@ -35,10 +35,12 @@ class RegistrationController extends AbstractController
                     $user,
                     $form->get('plainPassword')->getData()
                 ));
+                $user->setRoles(['ROLE_USER']);
                 //$user->setPassword($password);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush(); 
                 $notification = 'Inscription validé !';
+                $this->addFlash('succes', 'Votre compte a bien été créé');
 
             // do anything else you need here, like send an email
 

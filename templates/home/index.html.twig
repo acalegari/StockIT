@@ -9,12 +9,11 @@
 {% block body %}
 
     <!-- GALLERY TITLE -->
-      <div class="album pt-5 bg-light">
         <h1> TOUS NOS ÉQUIPEMENTS :</h1>
-      </div>
     <!-- /GALLERY TITLE -->
     
-   <!-- ADD PRODUCT MODAL -->
+   <!-- ADD PRODUCT MODAL ONLY FOR ADMIN -->
+   {% if is_granted('ROLE_ADMIN') %}
       <div>
         <div class="buttonAdd">
           <button type="button" id="addEquipement" name="modalForm-add" title="addEquipement"
@@ -126,33 +125,42 @@
           </div>
         </div>
       </div>
+    {% endif %}
     <!-- GALLERY -->
       <div class="container">
         <div class="row justify-content-md-center no-gutters" id="gallery">
           {% for equipement in equipements %}
-            <div class="col-md-4 col-resize">
+            <div class="col-md-4 col-resize {{ equipement.categories.name }}">
+            {% if is_granted('ROLE_ADMIN') %}
               <div class="div-buttons box-shadow">
                 <button type="button" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-outline-danger btn-trash" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
+                <button class="btn btn-outline-danger btn-trash" id="{{ equipement.id }}" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
+                  <i class="fa fa-trash" aria-hidden="true"></i></button>
               </div>
+            {% endif %}
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top" src="{{ equipement.image }}" alt="">
                 <div class="card-body">
                   <p class="card-text">{{ equipement.name }}</p>
+                  {% if equipement.isCanBeLoaned == 1 %}
                   <div class="justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see'
-                        onclick="window.location.href = '{{ path('app_equipement') }}';">Voir</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category'
-                        onclick="window.location.href = '';">
-                        {{ equipement.categories.name }}</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';">Voir</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
                     </div>
                   </div>
-                  <small class="text-muted"></small>
+                  <small class="text-muted">Disponible</small>
+                  {% else %}
+                  <div class="justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';" disabled>Voir</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
+                    </div>
+                  </div>
+                  <small class="text-muted">Non disponible</small>
+                {% endif %}
                 </div>
               </div>
             </div>

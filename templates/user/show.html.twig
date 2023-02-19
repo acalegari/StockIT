@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %} Utilisateur {% endblock %}
+{% block headerLogged %} {% endblock %}
+
+{% block navbarLogged %} {% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>Utilisateur {{ user.firstname }} - {{ user.lastName }}</h1>
 
     <table class="table">
         <tbody>
@@ -37,10 +40,13 @@
             </tr>
         </tbody>
     </table>
-
+    <div>
+        <button type="button" id="newUser" name="newUser" title="newUser" class="btn btn-info" onclick="window.location.href = '{{ path('app_user_edit', {'id': user.id}) }}';">
+             Editer l'utilisateur
+        </button>
+    </div>
     <a href="{{ path('app_user_index') }}">back to list</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
+{% block footer %} {% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'admin/index.html.twig' %}
+
+    {% block title %}Gestion des utilisateurs{% endblock %}
+    {% block body %}
+        <h1>Equipement {{ equipement.name }}</h1>
+
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr scope="row">
+                            <th>Id</th>
+                            <td>{{ equipement.id }}</td>
+                        </tr>
+                        <tr scope="row">
+                            <th>Nom</th>
+                            <td>{{ equipement.name }}</td>
+                        </tr>
+                        <tr scope="row">
+                            <th>Catégorie</th>
+                            <td>{{ equipement.categories.name }}</td>
+                        </tr>
+                        <tr scope="row">
+                            <th>Disponibilité</th>
+                            <td>{{ equipement.isCanBeLoaned }}</td>
+                        </tr>
+                        <tr scope="row">
+                            <th>Image</th>
+                            <td>{{ equipement.image }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="centered">
+                <button type="button" id="newEquipement" name="newEquipement" title="newEquipement" class="btn btn-equipements" onclick="window.location.href = '{{ path('app_admin_equipements_edit', {'id': equipement.id}) }}';">
+                    Modifier l'equipement
+                </button>
+            </div>
+            <div class="centered">
+                <button type="button" id="back" name="back" title="back" class="btn btn-back" onclick="window.location.href = '{{ path('app_admin_equipements_index') }}';">
+                    retour à liste des équipements
+                </button>
+                {{ include('admin/equipements/_delete_form.html.twig') }}
+            </div>
+
+    {% endblock %} 
+    {% block footer %} {% endblock %}

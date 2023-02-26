@@ -8,13 +8,9 @@
     min-width: 100%;
     margin: 0 auto;
     text-align: center;
+    /* position: absolute; */
   }
   
   div .item {
     display: inline;
-  }
-  
-  .float-right {
-    float: right;
-    margin-right: 20px;
   }

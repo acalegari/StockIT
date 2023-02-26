@@ -264,3 +264,7 @@ input[type=search]:focus {
   color: red;
   margin-left: 10px;
 }
+
+.active {
+  background: red;
+}

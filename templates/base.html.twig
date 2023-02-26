@@ -1,175 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=0.86, initial-scale=0.86, shrink-to-fit=yes">
+    <meta name="description" content="Gestion Stock IT">
+    <meta name="author" content="Aurore Calegari">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, minimum-scale=0.86, initial-scale=0.86, shrink-to-fit=yes">
-  <meta name="description" content="Gestion Stock IT">
-  <meta name="author" content="Aurore Calegari">
-
-  <title>Stock IT</title>
+    <title>Stock IT</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/Logo_StockIT-Black.png') }}">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/navbar.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/footer.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"
-    integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/f1a259659b.js" crossorigin="anonymous"></script>
 
-{% if block('headerLogged') is defined %}
+  {% if block('headerLogged') is defined %}
     <link href="{{ asset('assets/css/sheet.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/gallery.js') }}" defer></script>
-{% endif %}
-{% if block('headerForm') is defined %}
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+  {% endif %}
+
+  {% if block('headerLoggedAdmin') is defined %}
+    <link href="{{ asset('assets/css/sheet.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/admin.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+  {% endif %}
+
+  {% if block('headerForm') is defined %}
     <link href="{{ asset('assets/css/forms.css') }}" rel="stylesheet">
-{% endif %}
+  {% endif %}
 
-  <!-- GOOGLE TAG (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-52CP6KFYT8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    <!-- GOOGLE TAG (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-52CP6KFYT8"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-52CP6KFYT8'); </script>
+  </head>
 
-    gtag('config', 'G-52CP6KFYT8');
-  </script>
-
-</head>
-
-<body>
+  <body>
     <header class="header-content">
+      {% if block('navbarLoggout') is defined %}
+        <nav class="navbar navbar-expand-sm navbar-custom">
+          <div class="container-fluid">
+          </div>
+        </nav>
+      {% endif %}
 
-    {% if block('navbarLoggout') is defined %}
-    <nav class="navbar navbar-expand-sm navbar-custom">
-            <div class="container-fluid">
+      {% if block('navbarLogged') is defined %}
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-custom navbar-expand-lg fixed-top">
+          <div class="container-fluid div-nav">
+            <span class="navbar-brand">
+              <img id="logo" src="{{ asset('assets/img/Logo_StockIT-White.png') }}" alt="Logo">
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+              <div class="flex-container d-flex">
+                <ul class="navbar-nav my-lg-0 navbar-nav-scroll navigation">
+
+                  <li class="p-2 0" {{ app.request.attributes.get('_route') }}>
+                    <a class="nav-link" href="{{ path('app_home') }}" id="Accueil"><i class="fa fa-home" aria-hidden="true" title="Accueil"></i>
+                      Accueil</a>
+                  </li>
+                  <li class="p-2 Réseau">
+                    <a class="nav-link" href="javascript: void(0)" id="réseau"><i class="fa fa-microchip"
+                        aria-hidden="true"></i>
+                      Réseau</a>
+                  </li>
+                  <li class="p-2 Téléphonique">
+                    <a class="nav-link" href="javascript: void(0)" id="téléphonique"><i class="fa fa-phone-square"
+                        aria-hidden="true"></i>
+                      Téléphonique</a>
+                  </li>
+                  <li class="p-2 Desktop">
+                    <a class="nav-link" href="javascript: void(0)" id="desktop"><i class="fa fa-desktop"
+                        aria-hidden="true"></i>
+                      Desktop</a>
+                  </li>
+                  <li class="p-2 Réunion">
+                    <a class="nav-link" href="javascript: void(0)" id="réunion"><i class="fa fa-video-camera"
+                        aria-hidden="true"></i>
+                      Réunion</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="flex-container d-flex div-right">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll navigation">
+                {% if is_granted('ROLE_ADMIN') %}
+                  <li class="item-six ml-auto p-2 top"  {% if app.request.get('_route') starts with 'user' %} class="active" {% endif %}>
+                    <a class="nav-link" href="{{ path('app_admin_index') }}"><i class="fa fa-user" aria-hidden="true"></i>
+                      Admin</a>
+                  </li>
+                {% endif %}
+                  <li class="item-seven ml-auto p-2">
+                    <a class="nav-link" href="{{ path('app_logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i>
+                      Déconnexion</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-    </nav>
-    {% endif %}
-
-    {% if block('navbarLogged') is defined %}
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-custom navbar-expand-lg fixed-top">
-      <div class="container-fluid div-nav">
-        <span class="navbar-brand">
-          <img id="logo" src="{{ asset('assets/img/Logo_StockIT-White.png') }}" alt="Logo">
-        </span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-          aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarToggler">
-          <div class="flex-container d-flex">
-            <ul class="navbar-nav my-lg-0 navbar-nav-scroll navigation">
-
-              <li class="p-2 0">
-                <a class="nav-link" href="{{ path('app_home') }}" id="Accueil"><i class="fa fa-home" aria-hidden="true" title="Accueil"></i>
-                  Accueil</a>
-              </li>
-              <li class="p-2 Réseau">
-                <a class="nav-link" href="javascript: void(0)" id="réseau"><i class="fa fa-microchip"
-                    aria-hidden="true"></i>
-                  Réseau</a>
-              </li>
-              <li class="p-2 Téléphonique">
-                <a class="nav-link" href="javascript: void(0)" id="téléphonique"><i class="fa fa-phone-square"
-                    aria-hidden="true"></i>
-                  Téléphonique</a>
-              </li>
-              <li class="p-2 Desktop">
-                <a class="nav-link" href="javascript: void(0)" id="desktop"><i class="fa fa-desktop"
-                    aria-hidden="true"></i>
-                  Desktop</a>
-              </li>
-              <li class="p-2 Réunion">
-                <a class="nav-link" href="javascript: void(0)" id="réunion"><i class="fa fa-video-camera"
-                    aria-hidden="true"></i>
-                  Réunion</a>
-              </li>
-            </ul>
           </div>
-          <div class="flex-container d-flex div-right">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll navigation">
-            {% if is_granted('ROLE_ADMIN') %}
-              <li class="item-six ml-auto p-2 top">
-                <a class="nav-link" href="{{ path('app_user_index') }}"><i class="fa fa-user" aria-hidden="true"></i>
-                  Admin</a>
-              </li>
-            {% endif %}
-              <li class="item-seven ml-auto p-2">
-                <a class="nav-link" href="{{ path('app_logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i>
-                  Déconnexion</a>
-              </li>
-            </ul>
+        </nav>
+        <!-- /NAVBAR -->
+      {% endif %}
+    </header>
+
+    <main class="main-container">
+      {% if block('searchbar') is defined %}
+        <!-- SEARCH BAR -->
+        <section class="section-search">
+          <h1 hidden>Section-search</h1>
+          <div class="col-md-6 search-center mobile-center">
+            <div class="header-search">
+              <form class="form-search">
+                <select class="input-select-search">
+                  <option value="0">Categories</option>
+                  <option value="1">Réunion</option>
+                  <option value="2">Téléphonique</option>
+                  <option value="3">Desktop</option>
+                  <option value="4">Réseau</option>
+                </select>
+                <input type="search" class="input-search" placeholder="Rechercher un équipement" aria-label="Search">
+                <button type="button" class="border search-btn btn-primary">Rechercher</button>
+              </form>
+            </div>
           </div>
+        </section>
+        <!-- /SEARCH BAR -->   
+      {% endif %}
+      
+      <div class="album pt-5 bg-light">
+        <section>
+          {% block body %}  {% endblock %}
+        </section>
+    </main>
+
+    {% if block('footer') is defined %}
+      <!-- Footer-->
+      <footer class="d-flex flex-wrap text-align-center justify-content-between align-items-center py-3 my-4">
+        <!-- COPYRIGHT -->
+        <div class="footer-container-connected">
+          <p class="item"><strong>Tous droits réservés &copy; Stock IT 2022</strong></p>
         </div>
-      </div>
-    </nav>
-
-    <!-- /NAVBAR -->
+        <!-- /COPYRIGHT -->
+      </footer>
     {% endif %}
-  </header>
-
-  <main class="main-container">
-    <div class="album pt-5 bg-light">
-        <h1> </h1>
     </div>
-  {% if block('searchbar') is defined %}
-    <!-- SEARCH BAR -->
-    <section class="section-search">
-      <h1 hidden>Section-search</h1>
-      <div class="col-md-6 search-center mobile-center">
-        <div class="header-search">
-          <form class="form-search">
-            <select class="input-select-search">
-              <option value="0">Categories</option>
-              <option value="1">Réunion</option>
-              <option value="2">Téléphonique</option>
-              <option value="3">Desktop</option>
-              <option value="4">Réseau</option>
-            </select>
-            <input type="search" class="input-search" placeholder="Rechercher un équipement" aria-label="Search">
-            <button type="button" class="border search-btn btn-primary">Rechercher</button>
-          </form>
-        </div>
-      </div>
-    </section>
-    <!-- /SEARCH BAR -->
+
+    {% if block('formFooter') is defined %}
+      <footer class="text-center text-lg-start footer-container">
+        <!-- Copyright -->
+        <div class="text-center p-3 "> <p class="item"><strong>Tous droits réservés &copy; Stock IT 2022</strong></div>
+      <!-- Copyright -->
+      </footer>
     {% endif %}
-      <section>
-      {% block body %}  {% endblock %}
-      </section>
-  </main>
-
-{% if block('footer') is defined %}
-<!-- Footer-->
-  <footer class="d-flex flex-wrap text-align-center justify-content-between align-items-center py-3 my-4">
-    <!-- COPYRIGHT -->
-    <div class="footer-container-connected">
-      <p class="item"><strong>Tous droits réservés &copy; Stock IT 2022</strong></p>
-      <p class="item float-right">
-        <a href="#">Retour en haut <i class="fa-solid fa-arrow-up"></i></a>
-      </p>
-    </div>
-    <!-- /COPYRIGHT -->
-  </footer>
-{% endif %}
-
-{% if block('formFooter') is defined %}
-  <footer class="text-center text-lg-start footer-container">
-      <!-- Copyright -->
-      <div class="text-center p-3 ">
-        © 2022 Copyright: STOCK IT
-      </div>
-      <!-- Copyright -->
-  </footer>
-{% endif %}
-  <!-- <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.10'><\/script>".replace("HOST", location.hostname));
-//]]></script>-->
-
-</body>
-
+      <!-- <script id="__bs_script__">//<![CDATA[
+        document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.10'><\/script>".replace("HOST", location.hostname));
+    //]]></script>-->
+  </body>
 </html>

@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -36,13 +35,10 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 ));
                 $user->setRoles(['ROLE_USER']);
-                //$user->setPassword($password);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush(); 
                 $notification = 'Inscription validé !';
                 $this->addFlash('succes', 'Votre compte a bien été créé');
-
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_home');
         }

@@ -1,0 +1,54 @@
+{% extends 'admin/index.html.twig' %}
+
+    {% block title %}Gestion des utilisateurs{% endblock %}
+    {% block body %}
+        <h1>Utilisateur {{ user.firstname }} - {{ user.lastName }}</h1>
+        
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <tbody>
+                    <tr scope="row">
+                        <th>Id</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr scope="row">
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr scope="row">
+                        <th>Roles</th>
+                        <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    </tr>
+                    <tr scope="row">
+                        <th>Password</th>
+                        <td>{{ user.password }}</td>
+                    </tr>
+                    <tr scope="row">
+                        <th>FirstName</th>
+                        <td>{{ user.firstName }}</td>
+                    </tr>
+                    <tr scope="row">
+                        <th>LastName</th>
+                        <td>{{ user.lastName }}</td>
+                    </tr scope="row">
+                    <tr scope="row">
+                        <th>Entreprise</th>
+                        <td>{{ user.entreprise }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="centered">
+            <button type="button" id="newUser" name="newUser" title="newUser" class="btn btn-users" onclick="window.location.href = '{{ path('app_admin_user_edit', {'id': user.id}) }}';">
+                Modifier l'utilisateur
+            </button>
+        </div>
+        <div class="centered">
+            <button type="button" id="back" name="back" title="back" class="btn btn-back" onclick="window.location.href = '{{ path('app_admin_user_index') }}';">
+            retour à liste des utilisateurs
+            </button>
+             {{ include('admin/user/_delete_form.html.twig') }}
+        </div>
+       
+    {% endblock %}
+    {% block footer %} {% endblock %}

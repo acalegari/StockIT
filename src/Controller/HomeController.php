@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Equipements;
 use App\Form\AddModalFormType;
 use App\Form\EditModalFormType;
-
+use App\Form\SearchEquipementsType;
 
 class HomeController extends AbstractController
 {
@@ -26,7 +26,17 @@ class HomeController extends AbstractController
     public function index(EquipementsRepository $equipementsRepository, CategoriesRepository $categoriesRepository, Request $request): Response
     {
 
-        $notification = null;
+        $notificationSearch = null;
+        $equipementsDsiplay = $equipementsRepository->findBy([],['id' => 'asc']);
+        $searchForm = $this->createForm(SearchEquipementsType::class);
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            //searchEquipements corresponding to the words searched
+            $equipementsDsiplay = $equipementsRepository->findEquipementsByName($searchForm->get('word')->getData());
+            $notificationSearch = 'Recheche effectuée !';
+        }
+
         //Add equipement form
         $equipement = new Equipements();
         $formAddEquipement = $this->createForm(AddModalFormType::class, $equipement);
@@ -49,23 +59,23 @@ class HomeController extends AbstractController
 
         } else {
             
-            $notification = 'L\'équipement n\'a pas pu être ajouté, veuillez vérifier les champs saisies'; 
+            $notification = 'Équipement pas ajouté, veuillez vérifier les champs saisies'; 
         }
     
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+             //notifications
+             'notificationsSearch' => $notificationSearch,
+             'notifications' => $notification,
             //forms create views
             'addForm' => $formAddEquipement->createView(),
             'editForm' => $formEditEquipement->createView(),
+            'form' => $searchForm->createView(),
 
             //call repositories to find them by id and display each equipement by card -> uses on home/index.html.twig
-            'equipements' => $equipementsRepository->findBy([],
-            ['id' => 'asc']),
+            'equipements' => $equipementsDsiplay,
             'categories' => $categoriesRepository->findBy([],
             ['id' => 'asc']),
-            
-            //notifications
-            'notification', $notification
         ]);
     }
 

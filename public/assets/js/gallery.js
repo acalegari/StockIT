@@ -1,4 +1,4 @@
-import { isUrlImage } from './modal.js';
+import {addEquipementModal, isUrlImage } from './modal.js';
 
 //button addEquipement -> Add text when mouse is over + button and remove effect button
 $(document).ready(function () {

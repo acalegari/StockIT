@@ -22,6 +22,7 @@ class EquipementController extends AbstractController
     #[Route('/equipement/{id}', name: 'app_equipement')]
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
+        //display all equipements created on database
         $equipement = $doctrine->getRepository(Equipements::class)->find($id);
 
         if (!$equipement) {
@@ -29,6 +30,7 @@ class EquipementController extends AbstractController
                 'Aucun équipement trouvé pour l\id : '.$id
             );
         }
+        
         return $this->render('equipement/show.html.twig', ['equipement' => $equipement]);     
     }
 }

@@ -1,0 +1,18 @@
+{% extends 'admin/index.html.twig' %}
+
+    {% block title %}Gestion des utilisateurs{% endblock %}
+    {% block body %}
+        <h1>Modifier l'utilisateur</h1>
+            <div class="form">
+                 {{ include('admin/user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
+           
+            <div class="centered">
+                <button type="button" id="back" name="back" title="back" class="btn btn-outline-secondary btn-back" onclick="window.location.href = '{{ path('app_admin_user_index') }}';">
+                    Retour à liste des utilisateurs
+                </button>
+                {{ include('admin/user/_delete_form.html.twig') }}
+            </div>
+
+    {% endblock %}
+    {% block footer %} {% endblock %}

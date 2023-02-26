@@ -1,0 +1,17 @@
+{% extends 'admin/index.html.twig' %}
+
+    {% block title %}Gestion des équipements{% endblock %}
+    {% block body %}
+        <h1>Modifier l'équipement</h1>
+            <div class="">
+                {{ include('admin/equipements/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
+            <div class="centered">
+                <button type="button" id="back" name="back" title="back" class="btn btn-back" onclick="window.location.href = '{{ path('app_admin_equipements_index') }}';">
+                    retour à liste des utilisateurs
+                </button>
+               {{ include('admin/equipements/_delete_form.html.twig') }}
+            </div>
+            
+{% endblock %}
+{% block footer %} {% endblock %}

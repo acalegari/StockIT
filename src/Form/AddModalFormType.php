@@ -2,47 +2,53 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\Equipements;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class ModalFormType extends AbstractType
+class AddModalFormType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
                 'required'   => false,
-                'constraints' => new Length(null, 2, 50),
             ])
-            // ->add('categorie', ChoiceType::class,[
-
-            // ])
-            // ->add('isCanBeLoaned', CheckboxType::class,[
-            //     'required' => true,
-            // ])
+            ->add('categories', EntityType::class, [
+                // looks for choices from this entity
+                'class' => Categories::class,
+                'choice_label' => 'name',
+            ])
+            ->add('canBeLoaned', ChoiceType::class, [
+                    'required' => 'true', 
+                   'choices'  => [
+                        'Yes' => true,
+                        'No' => false,
+                ],
+            ])
             ->add('image',TextType::class, [
                 'label' => false,
                 'attr' => [
                     'label' => false,
                 ]
             ])
-            // ->add('save', ButtonType::class, [
-            //     'attr' => ['class' => 'save'],
-            // ]);
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'submit'],
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => null,
             'data_class' => Equipements::class,
         ]);
     }

@@ -11,121 +11,19 @@
     <!-- GALLERY TITLE -->
         <h1> TOUS NOS ÉQUIPEMENTS :</h1>
     <!-- /GALLERY TITLE -->
-    
-   <!-- ADD PRODUCT MODAL ONLY FOR ADMIN -->
+<!-- ADD PRODUCT MODAL ONLY FOR ADMIN -->
    {% if is_granted('ROLE_ADMIN') %}
-      <div>
+
+    <div>
         <div class="buttonAdd">
           <button type="button" id="addEquipement" name="modalForm-add" title="addEquipement"
-            class="btn btn-secondary home" data-bs-toggle="modal-add" data-bs-target="#staticBackdrop">
+            class="btn btn-secondary home" data-bs-toggle="modal" data-bs-target="#staticBackdropAdd">
             <i class="fa fa-plus" aria-hidden="true"></i>
           </button>
         </div>
-
-        <!-- ADD MODAL -->
-        <div class="modal fade modal-add" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
-          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <!-- ADD MODAL HEADER -->
-              <div class="modal-header" id="staticBackdropLabel">
-                <h4 class="modal-title text-align-center">Ajouter un nouvel équipement</h4>
-                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-add"
-                  aria-label="Close"></button>
-              </div>
-
-              <!-- ADD MODAL BODY -->
-              <div class="modal-body">
-                {{ form_start(addForm, { 'attr' : { 'class': 'modalForm addForm', 'value': 'add', 'action': '', 'name': 'modalForm-add', 'method': 'post' } }) }}
-                   {{ include('home/modal/addModalForm.html.twig') }}
-                  <div class="form-modal" id="modalForm-add"></div>
-               {{ form_end(addForm) }}
-              </div>
-
-              <!-- ADD MODAL FOORTER -->
-              <div class="modal-footer">
-                <button type="button" title="close" id="close" class="btn btn-danger close"
-                  data-bs-dismiss="modal-add">Fermer</button>
-                <button type="button" type="submit" title="save" id="save" class="btn btn-success send"  onclick="window.location.href = '{{ path('app_home') }}';">Ajouter</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- EDIT MODAL -->
-      <div>
-        <div class="modal fade modal-edit" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
-          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <!-- EDIT MODAL HEADER -->
-              <div class="modal-header" id="staticBackdropLabel">
-                <h5 class=" text-align-center">Modifier l'équipement : </h5>
-                <h5 class="text-align-center" id="equipementNameEdit"></h5>
-                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-edit"
-                  aria-label="Close"></button>
-              </div>
-
-              <!-- EDIT MODAL BODY -->
-              <div class="modal-body">
-                <form class="modalForm editForm" id="modal" value="edit" action="" name="formModal" method="post">
-                  {{ include('home/modal/editModalForm.html.twig') }}
-                  <div class="form-modal" id="modalForm-edit">
-                    <span class="hidden" id="empty">
-                      <p>Veuillez remplir correctement tous les champs avant de cliquer sur modifier.</p>
-                    </span>
-                  </div>
-                </form>
-              </div>
-
-              <!-- EDIT MODAL FOOTER -->
-              <div class="modal-footer">
-                <button type="button" title="close" id="close" class="btn btn-danger close"
-                  data-bs-dismiss="modal-edit">Annuler</button>
-                <button type="button" type="submit" title="save" id="modify"
-                  class="btn btn-success modify">Modifier</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRASH MODAL -->
-      <div>
-        <div class="modal fade modal-trash" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
-          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-
-              <!-- TRASH MODAL HEADER -->
-              <div class="modal-header" id="staticBackdropLabel">
-                <h5 class="modal-title text-align-center">Équipement supprimé : </h5>
-                <h5 class="modal-title text-align-center" id="equipementNameTrash"></h5>
-                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-trash"
-                  aria-label="Close"></button>
-              </div>
-
-              <!-- TRASH MODAL BODY -->
-              <div class="modal-body">
-                <form id="modal-trash" value="trash" action="" name="formModalTrash">
-                    <!-- insert modal-body using gallery.js -->
-                </form>
-              </div>
-
-              <!-- TRASH MODAL FOOTER -->
-              <div class="modal-footer">
-                <button type="button" title="close" id="close" class="btn btn-danger close"
-                  data-bs-dismiss="modal-trash">Non</button>
-                <button type="button" type="submit" title="save" id="yes" class="btn btn-success yes">Oui</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
     {% endif %}
+    
     <!-- GALLERY -->
       <div class="container">
         <div class="row justify-content-md-center no-gutters" id="gallery">
@@ -133,8 +31,9 @@
             <div class="col-md-4 col-resize {{ equipement.categories.name }}">
             {% if is_granted('ROLE_ADMIN') %}
               <div class="div-buttons box-shadow">
-                <button type="button" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
+                <button type="button" id="editEquipement" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
+                  {# {{ render(controller('App\\Controller\\HomeController::edit' )) }} #}
                 </button>
                 <button class="btn btn-outline-danger btn-trash" id="{{ equipement.id }}" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
                   <i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -168,6 +67,227 @@
         </div>
       </div>
       <!-- /GALLERY -->
+ {% if is_granted('ROLE_ADMIN') %}
+    <div>
+      <div class="modal fade modal-add" id="staticBackdropAdd" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+             <!-- ADD MODAL HEADER -->
+            <div class="modal-header" id="staticBackdropAdd">
+              <h4 class="modal-title text-align-center">Ajouter un équipement</h4>
+              <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-add" aria-label="Close"></button>
+            </div>
+
+              <!-- ADD MODAL BODY -->
+            <div class="modal-body">
+              {{ form_start(addForm, { 'attr' : { 'class': 'modalForm addForm', 'value': 'add', 'action': '', 'name': 'modalForm-add' } }) }}
+                <div class="modalFormAdd" id="modalForm-add">
+                  <div class="form-group"> 
+                    <label for"equipementName"> Ajouter le nom de l'équipement </label>
+                      {{ form_widget(addForm.name, { 'attr' : { 'class': 'form-control input1', 'id': 'equipementName', 'maxLength': 25 } }) }}
+                      {# <input class="form-control input1" id="equipementName" type="text" maxLength="25" required /> #} 
+                        <span class="hidden" id="equipementName"> Veuillez remplir ce champs </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="selectCategory" id="selectLabelCategory"> Sélectionnez une catégorie </label>
+                      {{ form_widget(addForm.categories, { 
+                        'label': 'Sélectionnez une catégorie',
+                          'attr' : { 
+                              'name': 'category',
+                              'class': 'form-control', 
+                                'id': 'selectCategory',
+                            } 
+                      }) }}
+                            
+                      {# <select name="category" class="form-control" id="selectCategory">
+                          <option value=""> Sélectionnez une catégorie </option>
+                          {% for categorie in categories %}
+                          <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                          {% endfor %}
+                      </select> #}
+                    <span class="hidden" id="category"> Veuillez selectionner une catégorie </span>
+                  </div>
+                  <div class="form-group radioE">
+                    {{ form_widget(addForm.canBeLoaned, { 
+                      'label': 'Sélectionnez une disponibilité',
+                      'attr' : { 
+                        'name': 'disponibilite',
+                        'class': 'form-control', 
+                        'id': 'selectCategory',
+                      } 
+                    }) }}
+                    {#<div class="form-check form-check-inline">
+                        <input class="form-check-input" id="false" for="inlineRadio1" type="radio" name="inlineRadioOptions" value="false" />
+                        <label class="form-check-label" for="inlineRadio1">Non</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="true" for="inlineRadio2" type="radio" name="inlineRadioOptions" value="true" />
+                        <label class="form-check-label" for="inlineRadio2">Oui</label>
+                        <span class="hidden" id="loaned"> Veuillez indiquer si l'équipement est Disponible </span>
+                    </div >#}
+                  </div> 
+                        
+                  <div class="form group url">
+                    <label for"addUrlImage"> Ajoutez l'url de l'image </label>
+                      {{ form_row(addForm.image, { 
+                        'attr' : { 
+                          'class': 'form-control', 
+                          'id': 'addUrlImage'
+                        } 
+                      }) }}  
+                      {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                    <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
+                  </div>
+                </div>
+              {# {{ form_end(addForm) }} #}
+            </div>
+
+            <!-- ADD MODAL FOORTER -->
+            <div class="modal-footer">
+              <button type="button" title="close" id="close" class="btn btn-danger close" data-bs-dismiss="modal-add">Fermer</button>
+                {{ form_widget(addForm.submit, {
+                  'label': 'Ajouter',
+                  'attr': {
+                    'class': 'btn btn-success send',
+                    'name': 'addForm',
+                    'id': 'save' ,
+                    'title': 'save',
+                  } 
+                }) }}
+              {# <button type="button" name="addForm" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button> #}
+            </div>
+            {{ form_end(addForm) }}
+          </div>
+        </div>
+      </div>  
+    </div>
+
+ <!-- EDIT MODAL -->
+    <div>
+      <div class="modal fade modal-edit" id="staticBackdropEdit" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- EDIT MODAL HEADER -->
+            <div class="modal-header" id="staticBackdropLabel">
+                <h5 class=" text-align-center">Modifier l'équipement : </h5>
+                <h5 class="text-align-center" id="equipementNameEdit"></h5>
+                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-edit" aria-label="Close"></button>
+            </div>
+
+            <!-- EDIT MODAL BODY -->
+            <div class="modal-body">
+              {{ form_start(editForm, { 'attr' : { 'class': 'modalForm editForm', 'value': 'edit', 'action': '', 'name': 'modalForm-edit' } }) }}
+              {# <form class="modalForm editForm" id="modal" value="edit" action="" name="formModal" method="post"> #}
+                <div class="modalFormAdd" id="modalForm-add">
+                  <div class="form-group"> 
+                      <label for"equipementName"> Modifier l'équipement </label>
+                        {{ form_widget(editForm.name, { 'attr' : { 'class': 'form-control input1', 'id': 'equipementName', 'maxLength': 25 } }) }}
+                        {# <input class="form-control input1" id="equipementName" type="text" maxLength="25" required /> #} 
+                      <span class="hidden" id="equipementName"> Veuillez remplir ce champs </span>
+                  </div>
+                  <div class="form-group">
+                    <label for="selectCategory" id="selectLabelCategory"> Sélectionnez une catégorie </label>
+                      {{ form_widget(editForm.categories, { 
+                          'label': 'Sélectionnez une catégorie',
+                          'attr' : { 
+                            'name': 'category',
+                            'class': 'form-control', 
+                            'id': 'selectCategory',
+                          } 
+                      }) }}
+                      {# <select name="category" class="form-control" id="selectCategory">
+                          <option value=""> Sélectionnez une catégorie </option>
+                          {% for categorie in categories %}
+                          <option value="{{ categorie.name }}">{{ categorie.name }}</option>
+                          {% endfor %}
+                      </select> #}
+                    <span class="hidden" id="category"> Veuillez selectionner une catégorie </span>
+                  </div>
+                  <div class="form-group radioE">
+                    {{ form_widget(editForm.canBeLoaned, { 
+                      'label': 'Sélectionnez une disponibilité',
+                      'attr' : { 
+                        'name': 'disponibilite',
+                        'class': 'form-control', 
+                        'id': 'selectCategory',
+                      } 
+                    }) }}
+                    {#<div class="form-check form-check-inline">
+                        <input class="form-check-input" id="false" for="inlineRadio1" type="radio" name="inlineRadioOptions" value="false" />
+                        <label class="form-check-label" for="inlineRadio1">Non</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="true" for="inlineRadio2" type="radio" name="inlineRadioOptions" value="true" />
+                        <label class="form-check-label" for="inlineRadio2">Oui</label>
+                        <span class="hidden" id="loaned"> Veuillez indiquer si l'équipement est Disponible </span>
+                    </div >#}
+                  </div> 
+                        
+                  <div class="form group url">
+                    <label for"addUrlImage"> Ajoutez l'url de l'image </label>
+                      {{ form_row(editForm.image, { 
+                        'attr' : { 
+                          'class': 'form-control', 
+                          'id': 'addUrlImage'
+                        } 
+                      }) }}
+                      {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                    <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
+                  </div>
+                
+                </div>
+            </div>
+
+            <!-- EDIT MODAL FOORTER -->
+            <div class="modal-footer">
+              <button type="button" title="close" id="close" class="btn btn-danger close" data-bs-dismiss="modal-edit">Fermer</button>
+                {{ form_widget(editForm.submit, { 'label': 'Modifier', 'attr': {
+                  'class': 'btn btn-success send',
+                  'name': 'editForm',
+                  'id': 'save' ,
+                  'title': 'save',
+                } }) }}
+                {# <button type="button" name="addForm" type="submit" title="save" id="save" class="btn btn-success submit"  onclick="window.location.href = '{{ path('app_home') }}';">Ajouter</button> #}
+            </div>
+          {{ form_end(editForm) }}
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- TRASH MODAL -->
+    <div>
+      <div class="modal fade modal-trash" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- TRASH MODAL HEADER -->
+            <div class="modal-header" id="staticBackdropLabel">
+                <h5 class="modal-title text-align-center">Équipement supprimé : </h5>
+                <h5 class="modal-title text-align-center" id="equipementNameTrash"></h5>
+                <button type="button" title="close" class="btn-close close" data-bs-dismiss="modal-trash" aria-label="Close"></button>
+            </div>
+
+            <!-- TRASH MODAL BODY -->
+            <div class="modal-body">
+                <form id="modal-trash" value="trash" action="" name="formModalTrash">
+                    <!-- No body form -->
+                </form>
+            </div>
+
+            <!-- TRASH MODAL FOOTER -->
+            <div class="modal-footer">
+                <button type="button" title="close" id="close" class="btn btn-danger close" data-bs-dismiss="modal-trash">Non</button>
+                <button type="button" type="submit" title="save" id="yes" class="btn btn-success yes">Oui</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+     {% endif %}
+     
 
 {% endblock %}
 

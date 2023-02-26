@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+  {% block title %}Admin !{% endblock %}
+
+  {% block headerLoggedAdmin %} {% endblock %}
+
+  {% block navbarLogged %} {% endblock %}
+
+  {% block body %}
+  <h1> ESPACE ADMIN </h1>
+    <main>
+      <div class="row ">
+        <div class="col-sm-6 container">
+          <div class="card item">
+            <div class="card-body">
+              <h5 class="card-title">Utilisateurs</h5>
+              <p class="card-text">Créer, modifier ou éditer un utilisateur</p>
+              <p class="card-text">Total d'utilisateurs :  </p>
+              <a href=" {{ path('app_admin_user_index') }}" class="btn btn-users">Allons-y</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 container">
+          <div class="card item">
+            <div class="card-body">
+              <h5 class="card-title">Équipements</h5>
+              <p class="card-text">Créer, modifier ou éditer un équipement.</p>
+              <p class="card-text">Total d'équipements : </p>
+              <a href="{{ path('app_admin_equipements_index') }}" class="btn btn-equipements">Allons-y</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    {% endblock %}
+
+    {% block footer %} {% endblock %}

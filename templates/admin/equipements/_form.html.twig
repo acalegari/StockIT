@@ -1,0 +1,41 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+        {# {{ form_row(form.name,{
+        "label": "Nom de l'équipement : ",
+        "required": true
+        })
+    }} #}
+
+    <div class="col-12">
+        {{ form_row(form.name, {
+            "label": "Nom de l'équipement :",
+            "required": true,
+            "attr": {
+                "placeholder": "Nom"
+            }
+        }) }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.categories,{
+        "label": "Catégorie de l'équipement : ",
+        "required": true
+        })
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.canBeLoaned,{
+        "label": "Disponible : ",
+        "required": true
+        })
+    }}
+    </div>
+    <div class="col-12">
+    {{ form_row(form.image,{
+        "label": "Image de l'équipement : ",
+        "required": true
+        })
+    }}
+    </div>
+    {{ form_row(form.submit, { 'label': 'Enregistrer' }) }}
+{{ form_end(form) }}

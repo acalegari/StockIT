@@ -1,0 +1,17 @@
+{% extends 'admin/index.html.twig' %}
+
+    {% block title %}Gestion des utilisateurs{% endblock %}
+    {% block body %}
+        <h1>Créer un nouvel Equipement</h1>
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    {{ include('admin/equipements/_form.html.twig') }}
+                </div>
+                <div class="centered">
+                    <button type="button" id="back" name="back" title="back" class="btn btn-back" onclick="window.location.href = '{{ path('app_admin_equipements_index') }}';">
+                        retour à liste des équipements
+                    </button>
+                </div>
+            </div>
+{% endblock %}
+{% block footer %} {% endblock %}

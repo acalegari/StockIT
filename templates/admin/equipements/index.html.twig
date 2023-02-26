@@ -1,0 +1,51 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Gestion des Equipements{% endblock %}
+
+{% block body %}
+    <h1>Tous les Equipements</h1>
+        <div class="table-responsove-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr scope="row">
+                        <th scope="col">Id</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Disponibilité</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for equipement in equipements %}
+                    <tr scope="row">
+                        <td>{{ equipement.id }}</td>
+                        <td>{{ equipement.name }}</td>
+                        <td>{{ equipement.categories.name }}</td>
+                        <td>{{ equipement.isCanBeLoaned }}</td>
+                        <td>{{ equipement.image }}</td>
+                        <td>
+                            <a href="{{ path('app_admin_equipements_show', {'id': equipement.id}) }}">Voir</a>
+                            <a href="{{ path('app_admin_equipements_edit', {'id': equipement.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr scope="row">
+                        <td colspan="10">Aucune données trouvées</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="centered">
+            <button type="button" id="newEquipement" name="newEquipement" title="newEquipement" class="btn btn-equipements" onclick="window.location.href = '{{ path('app_admin_equipements_new') }}';">
+                <i class="fa fa-plus" aria-hidden="true"></i> Ajouter un nouvel equipement
+            </button>
+        </div>
+        <div class="centered">
+            <button type="button" id="back" name="back" title="back" class="btn btn-back" onclick="window.location.href = '{{ path('app_admin_index') }}';">
+            Retour à la liste des utilisateurs
+            </button>
+        </div>
+{% endblock %}
+{% block footer %} {% endblock %}

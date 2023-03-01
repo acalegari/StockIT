@@ -32,9 +32,6 @@ class EquipementsType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('description')
-            ->add('createdAt', DateType::class,[
-                
-            ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'submit'],
             ]);

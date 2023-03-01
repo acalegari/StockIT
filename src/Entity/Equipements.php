@@ -37,6 +37,9 @@ class Equipements
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(type: 'string')]
+    private $imagePath;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,5 +115,17 @@ class Equipements
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath($imagePath)
+    {
+        $this->imagePath = $imagePath;
+        return $this->imagePath;
+
     }
 }

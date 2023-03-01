@@ -47,7 +47,8 @@
                 </div>
               {% endif %}
                 <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="{{ equipement.image }}" alt="">
+                  {# <img class="card-img-top" src="{{ equipement.image }}" alt=""> #}
+                  <img class="card-img-top" src="{{ asset('assets/img/data/resize/200x200-' ~ equipement.image) }}" alt="{{ equipement.name }}">
                   <div class="card-body">
                     <p class="card-text">{{ equipement.name }}</p>
                     {% if equipement.isCanBeLoaned == 1 %}
@@ -149,6 +150,8 @@
                         } 
                       }) }}  
                       {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                          {{ form_row(addForm.imagePath) }}
+
                     <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
                   </div>
                 </div>
@@ -169,6 +172,8 @@
                 }) }}
               {# <button type="button" name="addForm" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button> #}
             </div>
+
+            
             {{ form_end(addForm) }}
           </div>
         </div>

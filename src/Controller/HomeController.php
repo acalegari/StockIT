@@ -13,6 +13,11 @@ use App\Entity\Equipements;
 use App\Form\AddModalFormType;
 use App\Form\EditModalFormType;
 use App\Form\SearchEquipementsType;
+use App\Service\imageUpload;
+use App\Service\imageUploadService;
+use DateTimeImmutable;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends AbstractController
 {
@@ -23,9 +28,8 @@ class HomeController extends AbstractController
     }
 
     #[Route('/home', name: 'app_home')]
-    public function index(EquipementsRepository $equipementsRepository, CategoriesRepository $categoriesRepository, Request $request): Response
+    public function index(EquipementsRepository $equipementsRepository, CategoriesRepository $categoriesRepository, Request $request, imageUploadService $imageUpload, ClientRegistry $clientRegistry): Response
     {
-
         $notificationSearch = null;
         $equipementsDsiplay = $equipementsRepository->findBy([],['id' => 'asc']);
         $searchForm = $this->createForm(SearchEquipementsType::class);
@@ -37,6 +41,7 @@ class HomeController extends AbstractController
             $notificationSearch = 'Recheche effectuée !';
         }
 
+        $notification = null;
         //Add equipement form
         $equipement = new Equipements();
         $formAddEquipement = $this->createForm(AddModalFormType::class, $equipement);
@@ -46,10 +51,22 @@ class HomeController extends AbstractController
         $formEditEquipement = $this->createForm(EditModalFormType::class);
         $formEditEquipement->handleRequest($request);
         
-        // if validated and submitted ->add or edit form
+        // if validated and submitted -> add or edit form
         if ($formAddEquipement->isSubmitted() && $formAddEquipement->isValid() ||$formEditEquipement->isSubmitted() && $formEditEquipement->isValid() ) {
 
+           //retieve image
+            $image = $formAddEquipement->get('imagePath')->getData();
+            //destination folder
+            $folder = 'data';
+            //call service to add image
+            $file = $imageUpload->add($image, $folder);
+            $equipement->setImage($file);
+            $equipement->setImagePath($image);
+
+
             $equipement = $formAddEquipement->getData();
+            $date = new DateTimeImmutable();
+            $equipement->setCreatedAt($date);
             $this->entityManager->persist($equipement);
             $this->entityManager->flush(); 
             

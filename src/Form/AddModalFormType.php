@@ -11,6 +11,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class AddModalFormType extends AbstractType
 {
@@ -33,12 +35,35 @@ class AddModalFormType extends AbstractType
                         'No' => false,
                 ],
             ])
-            ->add('image',TextType::class, [
-                'label' => false,
-                'attr' => [
-                    'label' => false,
-                ]
+            ->add('image', TextType::class, [
+                'required'   => false,
             ])
+            ->add('imagePath', FileType::class, [
+                'label' => 'Image (jpg, png file)',
+                'multiple' => false,
+
+                // unmapped means that this field is not associated to any entity property
+                // 'mapped' => true,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        // 'maxSize' => '10024',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez charger une image qui a pour extension img, png ou webp',
+                    ])
+                ],
+            ])
+            // ...
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'submit'],
             ])

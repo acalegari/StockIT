@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\EquipementsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: EquipementsRepository::class)]
+#[ORM\Index(name: 'equipements_idx', columns: ['name', 'description'], flags: ['fulltext'])]
+
 class Equipements
 {
     #[ORM\Id]
@@ -25,6 +30,15 @@ class Equipements
     #[ORM\ManyToOne(inversedBy: 'equipements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categories = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'string')]
+    private $imagePath;
 
     public function getId(): ?int
     {
@@ -77,5 +91,41 @@ class Equipements
         $this->categories = $categories;
 
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath($imagePath)
+    {
+        $this->imagePath = $imagePath;
+        return $this->imagePath;
+
     }
 }

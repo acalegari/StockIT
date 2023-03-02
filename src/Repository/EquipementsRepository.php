@@ -39,6 +39,21 @@ class EquipementsRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Find equipements by name / description
+     * @return void
+     */
+    public function findEquipementsByName($word)
+    {
+        $query = $this->createQueryBuilder('e');
+        if ($word != null) {
+            $query->where('MATCH_AGAINST(e.name, e.description) AGAINST(:word boolean)>0')->setParameter('word', $word);
+        }
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Equipements[] Returns an array of Equipements objects
 //     */

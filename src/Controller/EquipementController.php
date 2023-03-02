@@ -30,6 +30,7 @@ class EquipementController extends AbstractController
                 'Aucun équipement trouvé pour l\id : '.$id
             );
         }
+
         
         return $this->render('equipement/show.html.twig', ['equipement' => $equipement]);     
     }

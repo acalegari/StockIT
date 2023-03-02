@@ -7,6 +7,7 @@ use App\Entity\Equipements;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -30,6 +31,7 @@ class EquipementsType extends AbstractType
                 'class' => Categories::class,
                 'choice_label' => 'name',
             ])
+            ->add('description')
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'submit'],
             ]);

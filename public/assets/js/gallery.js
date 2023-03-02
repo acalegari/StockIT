@@ -1,4 +1,4 @@
-import { isUrlImage } from './modal.js';
+import {addEquipementModal, isUrlImage } from './modal.js';
 
 //button addEquipement -> Add text when mouse is over + button and remove effect button
 $(document).ready(function () {
@@ -54,68 +54,66 @@ $(document).ready(function () {
                 type : "POST",
                 success : function(data){
                     $('.modal-add').modal('show');
-                    console.log($('.modal-add').modal('show'));
+                            
+                    //checks on change inputs
+                    $('.addForm :input').on('change', function (e) {
+                        let selectLoaned = e.target.checked;
+                        
+                        if (e.target.id == 'add_modal_form_name' && !e.target.value == '') {
+                            $($(this)).css('border', '');
+                            $('span#equipementName').addClass('hidden');
+                            $('span#equipementName').removeClass('errorMsgShow');
+                        }
+
+                        if (e.target.id == 'add_modal_form_name' && e.target.value == '') {
+                            $($(this)).css('border', '3px solid red');
+                            $('span#equipementName').removeClass('hidden');
+                            $('span#equipementName').addClass('errorMsgShow');
+                            $('#add_modal_form_submit').prop('disabled', true);
+                        }
+
+                        if (e.target.id == 'add_modal_form_categories' && e.target.value != 0) {
+                            $($(this)).css('border', '');
+                            $('span#category').addClass('hidden');
+                            $('span#category').removeClass('errorMsgShow');
+                        }
+                        if (e.target.id == 'add_modal_form_categories' && e.target.value == 0) {
+                            $($(this)).css('border', '3px solid red');
+                            $('span#category').removeClass('hidden');
+                            $('span#category').addClass('errorMsgShow');
+                        }
+                        if (e.target.name == 'add_modal_form_canBeLoaned' && selectLoaned != true) {
+                            $('span#loaned').addClass('errorMsgShow');
+                            $('span#loaned').removeClass('hidden');
+                        }
+                        if (e.target.name == 'add_modal_form_canBeLoaned' && selectLoaned == true) {
+                            $('span#loaned').removeClass('errorMsgShow');
+                            $('span#loaned').addClass('hidden');
+                        }
+
+                        if (e.target.id == 'add_modal_form_image') {
+                            if (isUrlImage(e.target.value) == false && e.target.value != '') {
+                                $($(this)).css('border', '3px solid red');
+                                $('span#urlInput').removeClass('hidden');
+                                $('span#urlInput').addClass('errorMsgShow');
+                                $('span#urlInput').html('Veuillez entrer une url valide. ex: https://www.xxxxx.jpg');
+                            }
+                            if (e.target.value == '') {
+                                $($(this)).css('border', '3px solid red');
+                                $('span#urlInput').removeClass('hidden');
+                                $('span#urlInput').addClass('errorMsgShow');
+                                $('span#urlInput').html('Veuillez entrer une url');
+                            }
+                            if (e.target.value != '' && isUrlImage(e.target.value) == true) {
+                                $($(this)).css('border', '');
+                                $('span#urlInput').addClass('hidden');
+                                $('span#urlInput').removeClass('errorMsgShow');
+                            }
+                        }
+                    });
                 }
             });
             return false;
-
-
-           
-            //checks on change inputs
-            $('.modalFormAdd :input').on('change', function (e) {
-                let selectLoaned = e.target.checked;
-                
-                if (e.target.id == 'modal_form_name' && !e.target.value == '') {
-                    $($(this)).css('border', '');
-                    $('span#equipementName').addClass('hidden');
-                    $('span#equipementName').removeClass('errorMsgShow');
-                }
-
-                if (e.target.id == 'modal_form_name' && e.target.value == '') {
-                    $($(this)).css('border', '3px solid red');
-                    $('span#equipementName').removeClass('hidden');
-                    $('span#equipementName').addClass('errorMsgShow');
-                }
-
-                if (e.target.id == 'selectCategory' && e.target.value != 0) {
-                    $($(this)).css('border', '');
-                    $('span#category').addClass('hidden');
-                    $('span#category').removeClass('errorMsgShow');
-                }
-                if (e.target.id == 'selectCategory' && e.target.value == 0) {
-                    $($(this)).css('border', '3px solid red');
-                    $('span#category').removeClass('hidden');
-                    $('span#category').addClass('errorMsgShow');
-                }
-                if (e.target.name == 'inlineRadioOptions' && selectLoaned != true) {
-                    $('span#loaned').addClass('errorMsgShow');
-                    $('span#loaned').removeClass('hidden');
-                }
-                if (selectLoaned == true) {
-                    $('span#loaned').removeClass('errorMsgShow');
-                    $('span#loaned').addClass('hidden');
-                }
-
-                if (e.target.id == 'modal_form_image') {
-                    if (isUrlImage(e.target.value) == false && e.target.value != '') {
-                        $($(this)).css('border', '3px solid red');
-                        $('span#urlInput').removeClass('hidden');
-                        $('span#urlInput').addClass('errorMsgShow');
-                        $('span#urlInput').html('Veuillez entrer une url valide. ex: https://www.xxxxx.jpg');
-                    }
-                    if (e.target.value == '') {
-                        $($(this)).css('border', '3px solid red');
-                        $('span#urlInput').removeClass('hidden');
-                        $('span#urlInput').addClass('errorMsgShow');
-                        $('span#urlInput').html('Veuillez entrer une url');
-                    }
-                    if (e.target.value != '' && isUrlImage(e.target.value) == true) {
-                        $($(this)).css('border', '');
-                        $('span#urlInput').addClass('hidden');
-                        $('span#urlInput').removeClass('errorMsgShow');
-                    }
-                }
-            });
         });
 
         //reset fields data + verifications information if existing, in the case the close button is clicked for addEquipementForm

@@ -12,7 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Equipements;
 use App\Form\AddModalFormType;
 use App\Form\EditModalFormType;
-
+use App\Form\SearchEquipementsType;
+use App\Service\imageUpload;
+use App\Service\imageUploadService;
+use DateTimeImmutable;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends AbstractController
 {
@@ -23,8 +28,18 @@ class HomeController extends AbstractController
     }
 
     #[Route('/home', name: 'app_home')]
-    public function index(EquipementsRepository $equipementsRepository, CategoriesRepository $categoriesRepository, Request $request): Response
+    public function index(EquipementsRepository $equipementsRepository, CategoriesRepository $categoriesRepository, Request $request, imageUploadService $imageUpload, ClientRegistry $clientRegistry): Response
     {
+        $notificationSearch = null;
+        $equipementsDsiplay = $equipementsRepository->findBy([],['id' => 'asc']);
+        $searchForm = $this->createForm(SearchEquipementsType::class);
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            //searchEquipements corresponding to the words searched
+            $equipementsDsiplay = $equipementsRepository->findEquipementsByName($searchForm->get('word')->getData());
+            $notificationSearch = 'Recheche effectuée !';
+        }
 
         $notification = null;
         //Add equipement form
@@ -36,10 +51,22 @@ class HomeController extends AbstractController
         $formEditEquipement = $this->createForm(EditModalFormType::class);
         $formEditEquipement->handleRequest($request);
         
-        // if validated and submitted ->add or edit form
+        // if validated and submitted -> add or edit form
         if ($formAddEquipement->isSubmitted() && $formAddEquipement->isValid() ||$formEditEquipement->isSubmitted() && $formEditEquipement->isValid() ) {
 
+           //retieve image
+            $image = $formAddEquipement->get('imagePath')->getData();
+            //destination folder
+            $folder = 'data';
+            //call service to add image
+            $file = $imageUpload->add($image, $folder);
+            $equipement->setImage($file);
+            $equipement->setImagePath($image);
+
+
             $equipement = $formAddEquipement->getData();
+            $date = new DateTimeImmutable();
+            $equipement->setCreatedAt($date);
             $this->entityManager->persist($equipement);
             $this->entityManager->flush(); 
             
@@ -49,23 +76,23 @@ class HomeController extends AbstractController
 
         } else {
             
-            $notification = 'L\'équipement n\'a pas pu être ajouté, veuillez vérifier les champs saisies'; 
+            $notification = 'Équipement pas ajouté, veuillez vérifier les champs saisies'; 
         }
     
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+             //notifications
+             'notificationsSearch' => $notificationSearch,
+             'notifications' => $notification,
             //forms create views
             'addForm' => $formAddEquipement->createView(),
             'editForm' => $formEditEquipement->createView(),
+            'form' => $searchForm->createView(),
 
             //call repositories to find them by id and display each equipement by card -> uses on home/index.html.twig
-            'equipements' => $equipementsRepository->findBy([],
-            ['id' => 'asc']),
+            'equipements' => $equipementsDsiplay,
             'categories' => $categoriesRepository->findBy([],
             ['id' => 'asc']),
-            
-            //notifications
-            'notification', $notification
         ]);
     }
 

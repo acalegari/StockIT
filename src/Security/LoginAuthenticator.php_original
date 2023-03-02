@@ -31,7 +31,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
-       
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
@@ -54,6 +53,8 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
+        
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+        // return $this->urlGenerator->generate('connect_google_check');
     }
 }

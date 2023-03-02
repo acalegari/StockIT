@@ -89,7 +89,7 @@
               <div class="flex-container d-flex div-right">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll navigation">
                 {% if is_granted('ROLE_ADMIN') %}
-                  <li class="item-six ml-auto p-2 top"  {% if app.request.get('_route') starts with 'user' %} class="active" {% endif %}>
+                  <li class="item-six ml-auto p-2 top">
                     <a class="nav-link" href="{{ path('app_admin_index') }}"><i class="fa fa-user" aria-hidden="true"></i>
                       Admin</a>
                   </li>
@@ -108,23 +108,17 @@
     </header>
 
     <main class="main-container">
+
       {% if block('searchbar') is defined %}
         <!-- SEARCH BAR -->
         <section class="section-search">
           <h1 hidden>Section-search</h1>
           <div class="col-md-6 search-center mobile-center">
             <div class="header-search">
-              <form class="form-search">
-                <select class="input-select-search">
-                  <option value="0">Categories</option>
-                  <option value="1">Réunion</option>
-                  <option value="2">Téléphonique</option>
-                  <option value="3">Desktop</option>
-                  <option value="4">Réseau</option>
-                </select>
-                <input type="search" class="input-search" placeholder="Rechercher un équipement" aria-label="Search">
-                <button type="button" class="border search-btn btn-primary">Rechercher</button>
-              </form>
+              <div class="form-search">
+                  {{ form(form) }}
+              </div>
+              
             </div>
           </div>
         </section>

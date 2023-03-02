@@ -8,62 +8,75 @@
 
 {% block body %}
 
+    {% if notificationsSearch %}
+      <div class="alert alert-info centered" role="alert">
+        <p> {{ notificationsSearch }} </p>
+      </div>
+    {% endif %}
+
     <!-- GALLERY TITLE -->
         <h1> TOUS NOS ÉQUIPEMENTS :</h1>
     <!-- /GALLERY TITLE -->
-<!-- ADD PRODUCT MODAL ONLY FOR ADMIN -->
-   {% if is_granted('ROLE_ADMIN') %}
 
-    <div>
-        <div class="buttonAdd">
-          <button type="button" id="addEquipement" name="modalForm-add" title="addEquipement"
-            class="btn btn-secondary home" data-bs-toggle="modal" data-bs-target="#staticBackdropAdd">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </button>
-        </div>
-    </div>
+    <!-- ADD PRODUCT MODAL ONLY FOR ADMIN -->
+   {% if is_granted('ROLE_ADMIN') %}
+      <div>
+          <div class="buttonAdd">
+            <button type="button" id="addEquipement" name="modalForm-add" title="addEquipement"
+              class="btn btn-secondary home" data-bs-toggle="modal" data-bs-target="#staticBackdropAdd">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+      </div>
     {% endif %}
     
     <!-- GALLERY -->
       <div class="container">
         <div class="row justify-content-md-center no-gutters" id="gallery">
-          {% for equipement in equipements %}
-            <div class="col-md-4 col-resize {{ equipement.categories.name }}">
-            {% if is_granted('ROLE_ADMIN') %}
-              <div class="div-buttons box-shadow">
-                <button type="button" id="editEquipement" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                  {# {{ render(controller('App\\Controller\\HomeController::edit' )) }} #}
-                </button>
-                <button class="btn btn-outline-danger btn-trash" id="{{ equipement.id }}" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
-                  <i class="fa fa-trash" aria-hidden="true"></i></button>
-              </div>
-            {% endif %}
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{{ equipement.image }}" alt="">
-                <div class="card-body">
-                  <p class="card-text">{{ equipement.name }}</p>
-                  {% if equipement.isCanBeLoaned == 1 %}
-                  <div class="justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';">Voir</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
+          {% if equipements %}
+            {% for equipement in equipements %}
+              <div class="col-md-4 col-resize {{ equipement.categories.name }}">
+              {% if is_granted('ROLE_ADMIN') %}
+                <div class="div-buttons box-shadow">
+                  <button type="button" id="editEquipement" class="btn btn-outline-info btn-edit" title="edit" name="modalForm-edit" data-bs-toggle="modal-edit" data-bs-target="#staticBackdropEdit">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    {# {{ render(controller('App\\Controller\\HomeController::edit' )) }} #}
+                  </button>
+                  <button class="btn btn-outline-danger btn-trash" id="{{ equipement.id }}" title="trash" name="trash" data-bs-toggle="modal-trash" data-bs-target="#staticBackdropTrash">
+                    <i class="fa fa-trash" aria-hidden="true"></i></button>
+                </div>
+              {% endif %}
+                <div class="card mb-4 box-shadow">
+                  {# <img class="card-img-top" src="{{ equipement.image }}" alt=""> #}
+                  <img class="card-img-top" src="{{ asset('assets/img/data/resize/200x200-' ~ equipement.image) }}" alt="{{ equipement.name }}">
+                  <div class="card-body">
+                    <p class="card-text">{{ equipement.name }}</p>
+                    {% if equipement.isCanBeLoaned == 1 %}
+                    <div class="justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';">Voir</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
+                      </div>
                     </div>
-                  </div>
-                  <small class="text-muted">Disponible</small>
-                  {% else %}
-                  <div class="justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';" disabled>Voir</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
+                    <small class="text-muted">Disponible</small>
+                    {% else %}
+                    <div class="justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" title='see' onclick="window.location.href = '{{ path('app_equipement', {'id': equipement.id }) }}';" disabled>Voir</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" title='category' onclick="window.location.href = '';"> {{ equipement.categories.name }}</button>
+                      </div>
                     </div>
+                    <small class="text-muted">Non disponible</small>
+                  {% endif %}
                   </div>
-                  <small class="text-muted">Non disponible</small>
-                {% endif %}
                 </div>
               </div>
+            {% endfor %}
+          {% else %}
+            <div class="centered">
+              <p id="search"> Aucun équipement trouvés </p>
             </div>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
       <!-- /GALLERY -->
@@ -137,6 +150,8 @@
                         } 
                       }) }}  
                       {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                          {{ form_row(addForm.imagePath) }}
+
                     <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
                   </div>
                 </div>
@@ -157,6 +172,8 @@
                 }) }}
               {# <button type="button" name="addForm" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button> #}
             </div>
+
+            
             {{ form_end(addForm) }}
           </div>
         </div>

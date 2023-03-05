@@ -6,51 +6,56 @@ use App\Entity\Categories;
 use App\Entity\Equipements;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddModalFormType extends AbstractType
+//FORM USED ON THE HOME PAGE TO ADD EQUIPEMENT FROM MODAL
+class ModalFormType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
                 'required'   => false,
+                'constraints' => new Length(null, 1, 25),
+                'attr' => [
+                    'class' => 'form-control input1',
+                    'id' => 'equipementName',
+                ]
             ])
             ->add('categories', EntityType::class, [
-                // looks for choices from this entity
+                'label' => 'Sélectionnez une catégorie',
                 'class' => Categories::class,
                 'choice_label' => 'name',
-            ])
+                'attr' => [
+                    'name' => 'category',
+                    'class' => 'form-control', 
+                    'id' => 'selectCategory',
+                ]
+            ]) 
             ->add('canBeLoaned', ChoiceType::class, [
-                    'required' => 'true', 
-                   'choices'  => [
-                        'Yes' => true,
-                        'No' => false,
+                'label' => 'Sélectionnez une disponibilité',
+                'required' => 'true', 
+                'choices'  => [
+                    'Oui' => true,
+                    'Non' => false,
                 ],
-            ])
-            ->add('image', TextType::class, [
-                'required'   => false,
+                'attr' => [ 
+                    'name' => 'disponibilite',
+                    'class' => 'form-control', 
+                    'id' => 'selectCategory',
+                ]
             ])
             ->add('imagePath', FileType::class, [
                 'label' => 'Image (jpg, png file)',
                 'multiple' => false,
-
-                // unmapped means that this field is not associated to any entity property
-                // 'mapped' => true,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
                         // 'maxSize' => '10024',
@@ -61,11 +66,16 @@ class AddModalFormType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Veuillez charger une image qui a pour extension img, png ou webp',
                     ])
-                ],
+                ]
             ])
-            // ...
             ->add('submit', SubmitType::class, [
-                'attr' => ['class' => 'submit'],
+                'label' => 'Ajouter', 
+                'attr' => [
+                    'class' => 'submit btn btn-success send',
+                    'name' => 'addForm',
+                    'id' => 'save' ,
+                    'title' => 'save',
+                ],
             ])
         ;
     }

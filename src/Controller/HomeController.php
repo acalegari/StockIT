@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipements;
+use App\Form\ModalFormType;
+use App\Form\SearchEquipementsType;
 use App\Repository\CategoriesRepository;
 use App\Repository\EquipementsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,15 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Equipements;
-use App\Form\AddModalFormType;
-use App\Form\EditModalFormType;
-use App\Form\SearchEquipementsType;
-use App\Service\imageUpload;
 use App\Service\imageUploadService;
 use DateTimeImmutable;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends AbstractController
 {
@@ -44,11 +41,11 @@ class HomeController extends AbstractController
         $notification = null;
         //Add equipement form
         $equipement = new Equipements();
-        $formAddEquipement = $this->createForm(AddModalFormType::class, $equipement);
+        $formAddEquipement = $this->createForm(ModalFormType::class, $equipement);
         $formAddEquipement->handleRequest($request);
 
         //edit equipement form
-        $formEditEquipement = $this->createForm(EditModalFormType::class);
+        $formEditEquipement = $this->createForm(ModalFormType::class);
         $formEditEquipement->handleRequest($request);
         
         // if validated and submitted -> add or edit form
@@ -56,12 +53,10 @@ class HomeController extends AbstractController
 
            //retieve image
             $image = $formAddEquipement->get('imagePath')->getData();
-            //destination folder
-            $folder = 'data';
             //call service to add image
-            $file = $imageUpload->add($image, $folder);
-            $equipement->setImage($file);
-            $equipement->setImagePath($image);
+            $file = $imageUpload->add($image);
+            $equipement->setImage($file[0]);
+            $equipement->setImagePath($file[1]);
 
 
             $equipement = $formAddEquipement->getData();

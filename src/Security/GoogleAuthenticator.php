@@ -8,7 +8,6 @@ use League\OAuth2\Client\Provider\GoogleUser;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
-use Symfony\Component\HttpClient\HttpClient as HttpClientHttpClient;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +31,7 @@ class GoogleAuthenticator extends OAuth2Authenticator {
         $this->entityManager = $entityManager;
     }
 
-    public function start(Request $request, AuthenticationException $authenticationException = null) 
+    public function start() 
     {
 
         return new RedirectResponse($this->router->generate('app_login'));
@@ -58,28 +57,30 @@ class GoogleAuthenticator extends OAuth2Authenticator {
                 $lastName = $googleUser->getLastName();
                 $firstName = $googleUser->getFirstName();
 
-                // have they logged in with Google before? Easy!
+                // User already logged before
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
 
-                //User doesnt exist, we create it !
+                //Create user if not exists
                 if (!$existingUser) {
-                    $existingUser = new User();
-                    $existingUser->setEmail($email);
-                    $existingUser->setFirstName($firstName);
-                    $existingUser->setLastName($lastName);
-                    $existingUser->setGoogleId($googleUser->getId());
-                    $existingUser->setRoles(['ROLE_USER']);
-                    
-                    
+                    //email address already saved
+                    $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+                    if($user) {
+                        $existingUser = $user->setGoogleId($googleUser->getId());
+                    } else {
+                        $existingUser = new User();
+                        $existingUser->setEmail($email);
+                        $existingUser->setFirstName($firstName);
+                        $existingUser->setLastName($lastName);
+                        $existingUser->setGoogleId($googleUser->getId());
+                        $existingUser->setRoles(['ROLE_USER']);
+                    }
                     $this->entityManager->persist($existingUser);
                 }
-                // $existingUser->setAvatar($googleUser->getAvatar());
                 $this->entityManager->flush();
 
                 return $existingUser;
             })
         );
-        
     }
 
     // public function getUser ($credentials, UserProviderInterface $userProvider) 
@@ -89,14 +90,9 @@ class GoogleAuthenticator extends OAuth2Authenticator {
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-
-        // change "app_dashboard" to some route in your app
         return new RedirectResponse(
             $this->router->generate('app_home')
         );
-
-        // or, on success, let the request continue to be handled by the controller
-        //return null;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response

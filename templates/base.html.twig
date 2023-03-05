@@ -32,6 +32,11 @@
     <link href="{{ asset('assets/css/forms.css') }}" rel="stylesheet">
   {% endif %}
 
+  {% if block('calendar') is defined %}
+    <link href="{{ asset('assets/css/calendar.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+  {% endif %}
+
     <!-- GOOGLE TAG (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-52CP6KFYT8"></script>
     <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-52CP6KFYT8'); </script>
@@ -153,5 +158,12 @@
       <!-- <script id="__bs_script__">//<![CDATA[
         document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.27.10'><\/script>".replace("HOST", location.hostname));
     //]]></script>-->
+
+    {% if block('jsCalendar') is defined %}
+      <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@5.11.4/main.global.min.js" integrity="sha256-LB2bZrToLba7cF1LJBNFGig0wC9Vttgk1/WxAz8EkhU=" crossorigin="anonymous"></script>
+    {% endif %}
+
+    {% block javascripts %}{% endblock %}
   </body>
 </html>

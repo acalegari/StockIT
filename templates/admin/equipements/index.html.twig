@@ -12,7 +12,8 @@
                         <th scope="col">Nom</th>
                         <th scope="col">Catégorie</th>
                         <th scope="col">Disponibilité</th>
-                        <th scope="col">Image</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image Id</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -23,6 +24,7 @@
                         <td>{{ equipement.name }}</td>
                         <td>{{ equipement.categories.name }}</td>
                         <td>{{ equipement.isCanBeLoaned }}</td>
+                        <td>{{ equipement.description }}</td>
                         <td>{{ equipement.image }}</td>
                         <td>
                             <a href="{{ path('app_admin_equipements_show', {'id': equipement.id}) }}">Voir</a>

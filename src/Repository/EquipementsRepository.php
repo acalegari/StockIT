@@ -41,7 +41,9 @@ class EquipementsRepository extends ServiceEntityRepository
 
     /**
      * Find equipements by name / description
-     * @return void
+     * {@inheritdoc}
+     *
+     * @return callable|object
      */
     public function findEquipementsByName($word)
     {

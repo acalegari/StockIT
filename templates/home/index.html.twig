@@ -94,82 +94,44 @@
 
               <!-- ADD MODAL BODY -->
             <div class="modal-body">
-              {{ form_start(addForm, { 'attr' : { 'class': 'modalForm addForm', 'value': 'add', 'action': '', 'name': 'modalForm-add' } }) }}
-                <div class="modalFormAdd" id="modalForm-add">
-                  <div class="form-group"> 
-                    <label for"equipementName"> Ajouter le nom de l'équipement </label>
-                      {{ form_widget(addForm.name, { 'attr' : { 'class': 'form-control input1', 'id': 'equipementName', 'maxLength': 25 } }) }}
-                      {# <input class="form-control input1" id="equipementName" type="text" maxLength="25" required /> #} 
-                        <span class="hidden" id="equipementName"> Veuillez remplir ce champs </span>
-                  </div>
-                  <div class="form-group">
-                    <label for="selectCategory" id="selectLabelCategory"> Sélectionnez une catégorie </label>
-                      {{ form_widget(addForm.categories, { 
-                        'label': 'Sélectionnez une catégorie',
-                          'attr' : { 
-                              'name': 'category',
-                              'class': 'form-control', 
-                                'id': 'selectCategory',
-                            } 
-                      }) }}
-                            
-                      {# <select name="category" class="form-control" id="selectCategory">
-                          <option value=""> Sélectionnez une catégorie </option>
-                          {% for categorie in categories %}
-                          <option value="{{ categorie.name }}">{{ categorie.name }}</option>
-                          {% endfor %}
-                      </select> #}
-                    <span class="hidden" id="category"> Veuillez selectionner une catégorie </span>
-                  </div>
-                  <div class="form-group radioE">
-                    {{ form_widget(addForm.canBeLoaned, { 
-                      'label': 'Sélectionnez une disponibilité',
-                      'attr' : { 
-                        'name': 'disponibilite',
-                        'class': 'form-control', 
-                        'id': 'selectCategory',
-                      } 
-                    }) }}
-                    {#<div class="form-check form-check-inline">
-                        <input class="form-check-input" id="false" for="inlineRadio1" type="radio" name="inlineRadioOptions" value="false" />
-                        <label class="form-check-label" for="inlineRadio1">Non</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="true" for="inlineRadio2" type="radio" name="inlineRadioOptions" value="true" />
-                        <label class="form-check-label" for="inlineRadio2">Oui</label>
-                        <span class="hidden" id="loaned"> Veuillez indiquer si l'équipement est Disponible </span>
-                    </div >#}
-                  </div> 
-                        
-                  <div class="form group url">
-                    <label for"addUrlImage"> Ajoutez l'url de l'image </label>
-                      {{ form_row(addForm.image, { 
-                        'attr' : { 
-                          'class': 'form-control', 
-                          'id': 'addUrlImage'
-                        } 
-                      }) }}  
-                      {# <input class="form-control" id="addUrlImage" type="text" required /> #}
-                          {{ form_row(addForm.imagePath) }}
-
-                    <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
-                  </div>
+              {{ form_start(addForm, {
+                 'attr' : {
+                    'class': 'modalForm addForm',
+                    'value': 'add',
+                    'name': 'modalForm-add' 
+                    }
+                  }
+                ) 
+              }}
+              <div class="modalFormAdd" id="modalForm-add">
+                <div class="form-group"> 
+                  <label for"equipementName"> Ajouter le nom de l'équipement :</label>
+                    {{ form_widget(addForm.name) }}
+                      <span class="hidden" id="equipementName"> Veuillez remplir ce champs :</span>
                 </div>
-              {# {{ form_end(addForm) }} #}
+                <div class="form-group">
+                  <label for="selectCategory" id="selectLabelCategory"> Sélectionnez une catégorie :</label>
+                    {{ form_widget(addForm.categories) }}
+                  <span class="hidden" id="category"> Veuillez selectionner une catégorie :</span>
+                </div>
+                <div class="form-group radioE">
+                  <label for="selectDisponibility" id="selectDisponibility"> L'équipement est-il réservable ?</label>
+                  {{ form_widget(addForm.canBeLoaned) }}
+                </div> 
+                      
+                <div class="form group url">
+                  <label for"addUrlImage"> Veuillez ajoutez une image :</label>
+                    {{ form_row(addForm.imagePath) }}
+                    {# <input class="form-control" id="addUrlImage" type="text" required /> #}
+                  <span class="hidden" id="urlInput"> Veuillez entrer une URL </span>
+                </div>
+              </div>
             </div>
 
             <!-- ADD MODAL FOORTER -->
             <div class="modal-footer">
               <button type="button" title="close" id="close" class="btn btn-danger close" data-bs-dismiss="modal-add">Fermer</button>
-                {{ form_widget(addForm.submit, {
-                  'label': 'Ajouter',
-                  'attr': {
-                    'class': 'btn btn-success send',
-                    'name': 'addForm',
-                    'id': 'save' ,
-                    'title': 'save',
-                  } 
-                }) }}
+                {{ form_widget(addForm.submit) }}
               {# <button type="button" name="addForm" type="submit" title="save" id="save" class="btn btn-success send">Ajouter</button> #}
             </div>
 
@@ -244,7 +206,7 @@
                         
                   <div class="form group url">
                     <label for"addUrlImage"> Ajoutez l'url de l'image </label>
-                      {{ form_row(editForm.image, { 
+                      {{ form_row(editForm.imagePath, { 
                         'attr' : { 
                           'class': 'form-control', 
                           'id': 'addUrlImage'

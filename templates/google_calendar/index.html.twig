@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GoogleCalendarController!{% endblock %}
+{% block calendar %} {% endblock %}
+
+{% block body %}  
+
+    <div id="calendar">
+    </div>
+
+{% endblock %}
+
+{% block jsCalendar %} {% endblock %}
+
+{% block javascripts %}
+
+    <script type="module" src="{{ asset('assets/js/calendar.js') }}"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+{% endblock %}
+

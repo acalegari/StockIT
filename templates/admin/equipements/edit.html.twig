@@ -2,7 +2,10 @@
 
     {% block title %}Gestion des équipements{% endblock %}
     {% block body %}
-        <h1>Modifier l'équipement</h1>
+        <h1>Modifier l'équipement {{ equipement.name }} </h1>
+            <div class="">
+                <img class="" src="{{ asset('assets/img/data/resize/200x200-' ~ equipement.image) }}" alt="{{ equipement.name }}">
+            </div>
             <div class="">
                 {{ include('admin/equipements/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
             </div>

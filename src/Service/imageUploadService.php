@@ -84,11 +84,12 @@ class imageUploadService {
         }
 
         //Store the reframe image
-        imagewebp($resizeImage, $pathDestination.$width.'x'.$height.'-'.$fichier);
+        $imagePath = $width.'x'.$height.'-'.$fichier;
+        imagewebp($resizeImage,$pathDestination.$imagePath);
         //move image into correct path
         $image->move($path.'/',$fichier);
 
-        return $fichier;
+        return [$fichier, $imagePath];
     }
 
     public function delete(string $fichier, ?string $folder = '', ?int $width = 200, ?int $height = 200) {

@@ -8,7 +8,6 @@
 {% block body %}
 
     <!-- PRODUCT -->
-
     <div class="container">
       <div class="container-fluid">
         <div class="wrapper row">
@@ -18,7 +17,7 @@
               <div class="row justify-content-md-center no-gutters">
                 <div class="col-md-6 col-resize-p">
                   <div class="card mb-6 box-shadow">
-                    <img class="card-img-top" src=" {{ equipement.image }}" alt="modem">
+                    <img class="card-img-top" src="{{ asset('assets/img/data/resize/200x200-' ~ equipement.image) }}" alt="{{ equipement.name }}">
                     <div class="card-body">
                       <p class="card-text">{{ equipement.name }}</p>
                     </div>
@@ -30,9 +29,7 @@
 
           <div class="details col-md-6 bg-light bg-gradient justify-content">
             <h3 class="product-title">{{ equipement.name }}</h3>
-            <p class="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed neque, corporis,
-              explicabo ipsa placeat obcaecati velit voluptate pariatur illum illo iusto! Culpa nulla deleniti
-              blanditiis vel totam temporibus maxime non.</p>
+            <p class="product-description">{{ equipement.description }}.</p>
             <h4 class="colors disponibility">
               <span class="color green available" data-toggle="tooltip" title="Not In store">{{ equipement.isCanBeLoaned }}</span>
             </h4>
@@ -40,7 +37,16 @@
           </div>
 
           <div>
-            <iframe src="https://calendar.google.com/calendar/embed?src=e29430e7a68d23a129cf9aedb44af5107519dcf31278809efb690b6841bbc8af%40group.calendar.google.com&ctz=Europe%2FParis" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+             <h1>Ajouter un nouvel événement</h1>
+              {{ include('equipement/_form.html.twig') }}
+          </div>
+
+          <div>
+            <h1>Modifier Calendar</h1>
+
+            {# {{ include('equipement/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+            {{ include('equipement/_form.html.twig') }} #}
           </div>
 
         </div>
